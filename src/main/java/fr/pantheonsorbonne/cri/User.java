@@ -33,11 +33,11 @@ public class User {
     }
 
     public void joinGroup(Group group) {
-        group.getMembers().add(this);
+        group.addMember(this);
     }
 
     public void leaveGroup(Group group) {
-        group.getMembers().remove(this);
+        group.removeMember(this);
     }
 
     public void changeUsername(String userName) {

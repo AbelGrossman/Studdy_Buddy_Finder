@@ -9,12 +9,31 @@ public class Group {
     private long groupId;
     private String groupName;
     private List<User> members;
+    private long adminId;
+    private int nbMembers;
+    private String studyDomain;
+    private String studyLevel;
 
-    public Group(String groupName, List<User> members) {
+    public Group(String groupName, List<User> members, long adminId, String studyDomain, String studyLevel) {
         this.groupId = groupAvailableIds.get(random.nextInt(groupAvailableIds.size()));
         groupAvailableIds.remove(groupId);
         this.groupName = groupName;
         this.members = members;
+        this.adminId = adminId;
+        this.nbMembers = members.size();
+        this.studyDomain = studyDomain;
+        this.studyLevel = studyLevel;
+        
+    }
+
+    public void addMember(User member) {
+        this.members.add(member);
+        this.nbMembers++;
+    }
+
+    public void removeMember(User member) {
+        this.members.remove(member);
+        this.nbMembers--;
     }
 
     public List<User> getMembers() {
@@ -27,6 +46,18 @@ public class Group {
 
     public long getGroupId() {
         return this.groupId;
+    }
+
+    public long getAdminId() {
+        return this.adminId;
+    }
+
+    public int getNbMembers() {
+        return this.nbMembers;
+    }
+
+    public String getStudyDomain() {
+        return this.studyDomain;
     }
 
 }
