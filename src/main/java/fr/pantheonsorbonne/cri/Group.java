@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Group {
     private Random random = new Random();
-    private static final List<Long> groupAvailableIds = new IdGenerator().getIds();
+    private static final List<Integer> groupAvailableIds = new IdGenerator().getIds();
     private long groupId;
     private String groupName;
     private List<User> members;
@@ -23,7 +23,7 @@ public class Group {
         this.nbMembers = members.size();
         this.studyDomain = studyDomain;
         this.studyLevel = studyLevel;
-        
+
     }
 
     public void addMember(User member) {

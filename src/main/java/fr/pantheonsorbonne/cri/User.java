@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class User {
     private Random random = new Random();
-    private static final List<Long> userAvailableIds = new IdGenerator().getIds();
-    private long userId;
+    private static final List<Integer> userAvailableIds = new IdGenerator().getIds();
+    private int userId;
     private String firstName;
     private String lastName;
     private String userName;
