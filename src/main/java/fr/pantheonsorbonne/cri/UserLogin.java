@@ -18,7 +18,7 @@ public class UserLogin {
         System.out.println("Bienvenue dans votre application de connexion !");
         System.out.println("----------------------------------------------");
 
-        // Demander à l'utilisateur de saisir son nom d'utilisateur et son mot de passe
+        // Demander à l'utilisateur de saisir son nom d'utilisateur et son mot de passe dans le terminal
         System.out.print("Nom d'utilisateur : ");
         String username = scanner.nextLine();
 
@@ -37,37 +37,16 @@ public class UserLogin {
 
     // Méthode pour vérifier les informations d'identification de l'utilisateur dans la base de données
     public static boolean login(String username, String password) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            // Établir la connexion à la base de données
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-
-            // Préparer la requête SQL
-            String sql = "SELECT * FROM user WHERE user_name = ? AND user_password = ?";
-            preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_name = ? AND user_password = ?")) {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
-
-            // Exécuter la requête
-            resultSet = preparedStatement.executeQuery();
-
-            // Vérifier si un utilisateur correspondant a été trouvé
-            return resultSet.next();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } finally {
-            // Fermer les ressources
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
