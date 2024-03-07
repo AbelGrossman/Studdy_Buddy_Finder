@@ -1,35 +1,71 @@
 package fr.pantheonsorbonne.cri;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 public class User {
-    private Random random = new Random();
-    private static final List<Integer> userAvailableIds = new IdGenerator().getIds();
+    private static int currentId = 0;
     private int userId;
     private String firstName;
     private String lastName;
     private String userName;
-    private String email;
-    private String password;
-    private List<String> locations;
+    private String userEmail;
+    private String userPassword;
+    private String location1;
+    private String location2;
+    private String location3;
+    private String interest1;
+    private String interest2;
+    private String interest3;
+    private String userStudies;
     private List<User> studdyBuddies;
-    private List<String> interests;
-    private Map<String, String> studiesLevels;
 
     public User(String firstName, String lastName, String userName, String email, String password,
-            List<String> locations, List<String> interests, Map<String, String> studiesLevels) {
-        this.userId = userAvailableIds.get(random.nextInt(userAvailableIds.size()));
-        userAvailableIds.remove(userId);
+            String location1, String location2, String location3, String interest1, String interest2, String interest3,
+            String studyLevel) {
+        this.userId = currentId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.locations = locations;
-        this.interests = interests;
-        this.studiesLevels = studiesLevels;
+        this.userEmail = email;
+        this.userPassword = password;
+        this.location1 = location1;
+        this.location2 = location2;
+        this.location3 = location3;
+        this.interest1 = interest1;
+        this.interest2 = interest2;
+        this.interest3 = interest3;
+        this.userStudies = studyLevel;
+        insertUserIntoDatabase();
+    }
+
+    private void insertUserIntoDatabase() {
+        String url = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
+        String username = "root";
+        String password = "";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String insertQuery = "INSERT INTO User (first_name, last_name, user_name, email_address, password, location, interests, study_level) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                preparedStatement.setString(1, this.firstName);
+                preparedStatement.setString(2, this.lastName);
+                preparedStatement.setString(3, this.userName);
+                preparedStatement.setString(4, this.userEmail);
+                preparedStatement.setString(5, this.userPassword);
+                // Assuming locations, interests, and studiesLevels are stored as strings for
+                // simplicity
+                preparedStatement.setString(6, String.join(",", this.location1, this.location2, this.location3));
+                preparedStatement.setString(7, String.join(",", this.interest1, this.interest2, this.interest3));
+                preparedStatement.setString(8, String.join(",", this.userStudies));
+                preparedStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            System.out.println("Error inserting user into the database: " + e.getMessage());
+        }
     }
 
     public void joinGroup(Group group) {
@@ -40,36 +76,16 @@ public class User {
         group.removeMember(this);
     }
 
-    public void changeUsername(String userName) {
+    public void setUsername(String userName) {
         this.userName = userName;
     }
 
-    public void changePassword(String password) {
-        this.password = password;
+    public void setUserPassword(String password) {
+        this.userPassword = password;
     }
 
-    public void addLocation(String location) {
-        this.locations.add(location);
-    }
-
-    public void removeLocation(String location) {
-        this.locations.remove(location);
-    }
-
-    public void addInterest(String interest) {
-        this.interests.add(interest);
-    }
-
-    public void removeInterest(String interest) {
-        this.interests.remove(interest);
-    }
-
-    public void addStudyLevel(String study, String level) {
-        this.studiesLevels.put(study, level);
-    }
-
-    public void removeStudyLevel(String study) {
-        this.studiesLevels.remove(study);
+    public String getUserStudies() {
+        return this.userStudies;
     }
 
     public void addStuddyBuddy(User studdyBuddy) {
@@ -92,27 +108,43 @@ public class User {
         return userName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public List<String> getLocations() {
-        return locations;
+    public String getLocation1() {
+        return location1;
+    }
+
+    public String getLocation2() {
+        return location2;
+    }
+
+    public String getLocation3() {
+        return location3;
     }
 
     public List<User> getStuddyBuddies() {
         return studdyBuddies;
     }
 
-    public List<String> getInterests() {
-        return interests;
+    public String getInterest1() {
+        return this.interest1;
     }
 
-    public Map<String, String> getStudiesLevels() {
-        return studiesLevels;
+    public String getInterest2() {
+        return this.interest2;
+    }
+
+    public String getInterest3() {
+        return this.interest3;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }
