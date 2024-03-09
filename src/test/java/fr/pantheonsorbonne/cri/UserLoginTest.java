@@ -3,6 +3,11 @@ package fr.pantheonsorbonne.cri;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+
 public class UserLoginTest {
 
     @Test
@@ -18,6 +23,44 @@ public class UserLoginTest {
 
         // Test de la connexion avec des identifiants incorrects
         assertFalse(UserLogin.login("wrongusername", "password"));
+    }
+
+    @Test
+    public void testMain() {
+        // Simuler les saisies utilisateur
+        System.setIn(new ByteArrayInputStream("Abel31\nabel123\n".getBytes()));
+
+        // Capturer la sortie standard
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Exécuter le main de UserLogin
+        UserLogin.main(null);
+
+        // Vérifier la sortie
+        String expectedOutput = "Bienvenue dans votre application de connexion !\n" +
+                                 "----------------------------------------------\n" +
+                                 "Nom d'utilisateur : Mot de passe : Connexion réussie !\n";
+        assertEquals(expectedOutput, outputStream.toString());
+    }
+
+    @Test
+    public void testMainWrong2() {
+        // Simuler les saisies utilisateur
+        System.setIn(new ByteArrayInputStream("Abel31\nwrongpassword\n".getBytes()));
+
+        // Capturer la sortie standard
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Exécuter le main de UserLogin
+        UserLogin.main(null);
+
+        // Vérifier la sortie
+        String expectedOutput = "Bienvenue dans votre application de connexion !\n" +
+                                 "----------------------------------------------\n" +
+                                 "Nom d'utilisateur : Mot de passe : Nom d'utilisateur ou mot de passe incorrect !\n";
+        assertEquals(expectedOutput, outputStream.toString());
     }
 }
 
