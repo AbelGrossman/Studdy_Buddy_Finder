@@ -45,7 +45,7 @@ public class UserLoginTest {
     }
 
     @Test
-    public void testMainWrong2() {
+    public void testMainWrong() {
         // Simuler les saisies utilisateur
         System.setIn(new ByteArrayInputStream("Abel31\nwrongpassword\n".getBytes()));
 

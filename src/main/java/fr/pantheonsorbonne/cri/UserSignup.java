@@ -1,0 +1,90 @@
+package fr.pantheonsorbonne.cri;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+
+
+public class UserSignup {
+    private static final String URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bienvenue dans votre application d'inscription !");
+        System.out.println("----------------------------------------------");
+
+        // Demander à l'utilisateur de saisir ses informations
+        System.out.print("Prénom : ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Nom : ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("Nom d'utilisateur : ");
+        String username = scanner.nextLine();
+
+        System.out.print("Adresse e-mail : ");
+        String email = scanner.nextLine();
+
+        System.out.print("Mot de passe : ");
+        String password = scanner.nextLine();
+
+        // Enregistrer l'utilisateur dans la base de données
+        if (registerUser(firstName, lastName, username, email, password)) {
+            System.out.println("Inscription réussie !");
+        } else {
+            System.out.println("Erreur lors de l'inscription !");
+        }
+
+        scanner.close();
+    }
+
+    // Méthode pour enregistrer un nouvel utilisateur dans la base de données
+    public static boolean registerUser(String firstName, String lastName, String username, String email, String password) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            // Vérifier si l'adresse e-mail est déjà utilisée
+            // preparedStatements utilisé contre injection SQl
+            try (PreparedStatement emailCheck = connection.prepareStatement("SELECT COUNT(*) FROM user WHERE user_email = ?")) {
+                emailCheck.setString(1, email);
+                try (ResultSet emailCheckResult = emailCheck.executeQuery()) {
+                    if (emailCheckResult.next() && emailCheckResult.getInt(1) > 0) {
+                        System.out.println("L'adresse e-mail est déjà utilisée.");
+                        return false;
+                    }
+                }
+            }
+
+            // Vérifier si le nom d'utilisateur est déjà pris
+            try (PreparedStatement usernameCheck = connection.prepareStatement("SELECT COUNT(*) FROM user WHERE user_name = ?")) {
+                usernameCheck.setString(1, username);
+                try (ResultSet usernameCheckResult = usernameCheck.executeQuery()) {
+                    if (usernameCheckResult.next() && usernameCheckResult.getInt(1) > 0) {
+                        System.out.println("Le nom d'utilisateur est déjà pris.");
+                        return false;
+                    }
+                }
+            }
+
+            // Insérer l'utilisateur dans la base de données
+            try (PreparedStatement insert = connection.prepareStatement("INSERT INTO user (first_name, last_name, user_name, user_email, user_password) VALUES (?, ?, ?, ?, ?)")) {
+                insert.setString(1, firstName);
+                insert.setString(2, lastName);
+                insert.setString(3, username);
+                insert.setString(4, email);
+                insert.setString(5, password);
+                int rowsAffected = insert.executeUpdate();
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+}
