@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+//Pour mettre les tests dans l'ordre snn il ne marche pas
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserSignupTest {
     

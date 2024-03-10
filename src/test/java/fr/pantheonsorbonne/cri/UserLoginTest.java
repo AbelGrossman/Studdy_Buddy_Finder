@@ -22,7 +22,7 @@ public class UserLoginTest {
         assertFalse(UserLogin.login("johndoe", "abel123"));
 
         // Test de la connexion avec des identifiants incorrects
-        assertFalse(UserLogin.login("wrongusername", "password"));
+        assertFalse(UserLogin.login("wrongusername", "wrongpassword"));
     }
 
     @Test
