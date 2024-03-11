@@ -52,7 +52,8 @@ public abstract class UserSignup {
         } else {
             System.out.println("Erreur lors de l'inscription. Veuillez réessayer.");
         }
-        scanner.close();
+        //il ne faut pas close le scanner sinon ca provoque un bug dans le menu principal.
+        //scanner.close();
     }
 
     // Méthode pour enregistrer un nouvel utilisateur dans la base de données

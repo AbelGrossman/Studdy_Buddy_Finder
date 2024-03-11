@@ -32,7 +32,8 @@ public abstract class UserLogin {
         } else {
             System.out.println("Nom d'utilisateur ou mot de passe incorrect. Réessayez ou inscrivez-vous.");
         }
-        scanner.close();
+        //il ne faut pas close le scanner sinon ca provoque un bug dans le menu principal.
+        //scanner.close();
     }
 
     // Méthode pour vérifier les informations d'identification de l'utilisateur dans
