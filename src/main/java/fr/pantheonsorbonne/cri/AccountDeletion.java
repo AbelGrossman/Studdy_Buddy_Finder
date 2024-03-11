@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class AccountDeletion {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
@@ -37,7 +38,7 @@ public class AccountDeletion {
                 preparedStatement.executeUpdate();
                 return true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error deleting user from the database" + e.getMessage());
             return false;
         }

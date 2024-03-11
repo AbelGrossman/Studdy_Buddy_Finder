@@ -50,10 +50,8 @@ public final class App {
                 + "user_password VARCHAR(50),"
                 + "location_1 VARCHAR(100),"
                 + "location_2 VARCHAR(100),"
-                + "location_3 VARCHAR(100),"
                 + "interest_1 VARCHAR(100),"
                 + "interest_2 VARCHAR(100),"
-                + "interest_3 VARCHAR(100),"
                 + "user_studdies VARCHAR(100)"
                 + ")";
         String createGroupTableQuery = "CREATE TABLE IF NOT EXISTS Group ("

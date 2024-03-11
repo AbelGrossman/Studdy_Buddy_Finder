@@ -37,19 +37,17 @@ public abstract class UserSignup {
         System.out.println("Veuillez saisir jusqu'à trois lieux de résidence : ");
         String location1 = scanner.nextLine();
         String location2 = scanner.nextLine();
-        String location3 = scanner.nextLine();
 
         System.out.println("Veuillez saisir jusqu'à trois centres d'intérêt : ");
         String interest1 = scanner.nextLine();
         String interest2 = scanner.nextLine();
-        String interest3 = scanner.nextLine();
 
         System.out.println("Veuillez saisir votre filière d'études : ");
         String userStudies = scanner.nextLine();
 
         // Enregistrer l'utilisateur dans la base de données
-        if (registerUser(firstName, lastName, userName, userEmail, userPassword, location1, location2, location3,
-                interest1, interest2, interest3, userStudies)) {
+        if (registerUser(firstName, lastName, userName, userEmail, userPassword, location1, location2,
+                interest1, interest2, userStudies)) {
             System.out.println("Inscription réussie !");
         } else {
             System.out.println("Erreur lors de l'inscription. Veuillez réessayer.");
@@ -59,8 +57,8 @@ public abstract class UserSignup {
 
     // Méthode pour enregistrer un nouvel utilisateur dans la base de données
     public static boolean registerUser(String firstName, String lastName, String userName, String userEmail,
-            String userPassword, String location1, String location2, String location3, String interest1,
-            String interest2, String interest3, String userStudies) {
+            String userPassword, String location1, String location2, String interest1,
+            String interest2, String userStudies) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             // Vérifier si l'adresse e-mail est déjà utilisée
             // preparedStatements utilisé contre injection SQL
@@ -89,7 +87,7 @@ public abstract class UserSignup {
 
             // Insérer l'utilisateur dans la base de données
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO user (first_name, last_name, user_name, user_email, user_password, location_1, location_2, location_3, interest_1, interest_2, interest_3,  user_studdies) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")) {
+                    "INSERT INTO user (first_name, last_name, user_name, user_email, user_password, location_1, location_2, interest_1, interest_2,  user_studdies) VALUES (?,?,?,?,?,?,?,?,?,?)")) {
                 preparedStatement.setString(1, firstName);
                 preparedStatement.setString(2, lastName);
                 preparedStatement.setString(3, userName);
@@ -97,16 +95,14 @@ public abstract class UserSignup {
                 preparedStatement.setString(5, userPassword);
                 preparedStatement.setString(6, location1);
                 preparedStatement.setString(7, location2);
-                preparedStatement.setString(8, location3);
-                preparedStatement.setString(9, interest1);
-                preparedStatement.setString(10, interest2);
-                preparedStatement.setString(11, interest3);
-                preparedStatement.setString(12, userStudies);
+                preparedStatement.setString(8, interest1);
+                preparedStatement.setString(9, interest2);
+                preparedStatement.setString(10, userStudies);
 
                 int rowsAffected = preparedStatement.executeUpdate();
-                new User(firstName, lastName, userName, userEmail, userPassword, location1, location2, location3,
+                new User(firstName, lastName, userName, userEmail, userPassword, location1, location2,
                         interest1,
-                        interest2, interest3, userStudies);
+                        interest2, userStudies);
                 return rowsAffected > 0;
             }
         } catch (SQLException e) {
