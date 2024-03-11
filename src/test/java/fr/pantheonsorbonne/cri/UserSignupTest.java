@@ -18,7 +18,7 @@ public class UserSignupTest {
     @Test
     @Order(1)
     public void testMain(){
-        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayal@gmail.com\nmashalah\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayal@gmail.com\nmashalah\nParis\nNew York\n''\nInformatique\nEconomie\nMathématiques\nMIAGE\n".getBytes()));
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
@@ -29,7 +29,7 @@ public class UserSignupTest {
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
                                  "----------------------------------------------\n" +
-                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Inscription réussie !\n";
+                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à trois lieux de résidence : Veuillez saisir jusqu'à trois centres d'intérêt : Veuillez saisir votre filière d'études : Inscription réussie !\n";
         assertEquals(expectedOutput, outputStream.toString());
 
     }
@@ -51,7 +51,7 @@ public class UserSignupTest {
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
                                  "----------------------------------------------\n" +
-                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : L'adresse e-mail est déjà utilisée.\n" +
+                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à trois lieux de résidence : Veuillez saisir jusqu'à trois centres d'intérêt : Veuillez saisir votre filière d'études : L'adresse e-mail est déjà utilisée.\n" +
                                  "Erreur lors de l'inscription !\n";
         assertEquals(expectedOutput, outputStream.toString());
     }
@@ -72,7 +72,7 @@ public class UserSignupTest {
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
                                  "----------------------------------------------\n" +
-                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Le nom d'utilisateur est déjà pris.\n" +
+                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à trois lieux de résidence : Veuillez saisir jusqu'à trois centres d'intérêt : Veuillez saisir votre filière d'études : Le nom d'utilisateur est déjà pris.\n" +
                                  "Erreur lors de l'inscription !\n";
         assertEquals(expectedOutput, outputStream.toString());
     }
