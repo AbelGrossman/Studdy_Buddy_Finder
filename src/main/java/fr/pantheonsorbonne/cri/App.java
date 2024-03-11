@@ -68,8 +68,16 @@ public final class App {
                 + "FOREIGN KEY (user_id) REFERENCES User(user_id),"
                 + "PRIMARY KEY (group_id, user_id)"
                 + ")";
+        String createStuddyBuddiesTableQuery = "CREATE TABLE IF NOT EXISTS StuddyBuddies ("
+                + "user_id INT,"
+                + "studdy_buddy_id INT,"
+                + "FOREIGN KEY (user_id) REFERENCES User(user_id),"
+                + "FOREIGN KEY (studdy_buddy_id) REFERENCES User(user_id),"
+                + "PRIMARY KEY (user_id, studdy_buddy_id)"
+                + ")";
         statement.executeUpdate(createUserTableQuery);
         statement.executeUpdate(createGroupTableQuery);
         statement.executeUpdate(createGroupMembersTableQuery);
+        statement.executeUpdate(createStuddyBuddiesTableQuery);
     }
 }

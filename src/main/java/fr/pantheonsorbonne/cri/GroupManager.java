@@ -12,41 +12,18 @@ public class GroupManager {
     private static final String DB_PASSWORD = "";
 
     private static Scanner scanner = new Scanner(System.in);
+    private User user;
 
     public GroupManager(User user) {
+        this.user = user;
+    }
+
+    public void createNewGroup() {
         String groupName = scanner.nextLine();
         String studyDomain = scanner.nextLine();
         String studyLevel = scanner.nextLine();
-        Group group = new Group(groupName, user, studyDomain, studyLevel);
-        insertGroupMemberIntoDatabase(group, user);
-    }
-
-    private void insertGroupMemberIntoDatabase(Group group, User user) {
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String insertQuery = "INSERT INTO GroupMembers (group_id, user_id) VALUES (?, ?)";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setInt(1, group.getGroupId());
-                preparedStatement.setInt(2, user.getUserId());
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error inserting group member into the database: " + e.getMessage());
-        }
-    }
-
-    private void removeGroupMemberFromDatabase(Group group, User user) {
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String deleteQuery = "DELETE FROM GroupMembers WHERE group_id = ? AND user_id = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
-                preparedStatement.setInt(1, group.getGroupId());
-                preparedStatement.setInt(2, user.getUserId());
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error deleting group member from the database: " + e.getMessage());
-        }
+        Group group = new Group(groupName, this.user, studyDomain, studyLevel);
+        insertGroupMemberIntoDatabase(group, this.user);
     }
 
     public void sendGroupRequest(Group group, User user) {
@@ -93,6 +70,34 @@ public class GroupManager {
         group = null;
     }
 
+    private void insertGroupMemberIntoDatabase(Group group, User user) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String insertQuery = "INSERT INTO GroupMembers (group_id, user_id) VALUES (?, ?)";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                preparedStatement.setInt(1, group.getGroupId());
+                preparedStatement.setInt(2, user.getUserId());
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error inserting group member into the database: " + e.getMessage());
+        }
+    }
+
+    private void removeGroupMemberFromDatabase(Group group, User user) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String deleteQuery = "DELETE FROM GroupMembers WHERE group_id = ? AND user_id = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setInt(1, group.getGroupId());
+                preparedStatement.setInt(2, user.getUserId());
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error deleting group member from the database: " + e.getMessage());
+        }
+    }
+
     private void deleteGroupMembers(Group group) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String deleteQuery = "DELETE FROM GroupMembers WHERE group_id = ?";
@@ -104,5 +109,9 @@ public class GroupManager {
         } catch (SQLException e) {
             System.out.println("Error deleting group members from the database: " + e.getMessage());
         }
+    }
+
+    public User getUser() {
+        return user;
     }
 }

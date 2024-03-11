@@ -24,6 +24,8 @@ public class User {
     private List<User> requestList = new ArrayList<>();
     private List<Group> groupRequestList = new ArrayList<>();
     private Map<Group, List<User>> adminRequests = new HashMap<>();
+    private GroupManager groupManagers;
+    private StuddyBuddiesManager studdyBuddiesManager;
 
     public User(String firstName, String lastName, String userName, String email, String password,
             String location1, String location2, String interest1, String interest2,
@@ -39,10 +41,8 @@ public class User {
         this.interest1 = interest1;
         this.interest2 = interest2;
         this.userStudies = userStudies;
-    }
-
-    public void createNewGroup() {
-        new GroupManager(this);
+        this.groupManagers = new GroupManager(this);
+        this.studdyBuddiesManager = new StuddyBuddiesManager(this);
     }
 
     public void setDbUsername(String userName) {
@@ -51,27 +51,6 @@ public class User {
 
     public void setUserPassword(String password) {
         this.userPassword = password;
-    }
-
-    public void addStuddyBuddy(User studdyBuddy) {
-        this.studdyBuddies.add(studdyBuddy);
-    }
-
-    public void removeStuddyBuddy(User studdyBuddy) {
-        this.studdyBuddies.remove(studdyBuddy);
-    }
-
-    public void sendStuddyBuddyRequest(User studdyBuddy) {
-        studdyBuddy.requestList.add(this);
-    }
-
-    public void answerStuddyBuddyRequest(List<User> requestList, int userId) {
-        boolean choice = scanner.nextBoolean();
-        if (choice) {
-            this.addStuddyBuddy(requestList.get(userId));
-            requestList.get(userId).addStuddyBuddy(this);
-        }
-        this.requestList.remove(requestList.get(userId));
     }
 
     public String getUserStudies() {
@@ -128,5 +107,17 @@ public class User {
 
     public List<Group> getGroupRequestList() {
         return this.groupRequestList;
+    }
+    
+    public List<User> getRequestList() {
+        return requestList;
+    }
+
+    public GroupManager getGroupManagers() {
+        return groupManagers;
+    }
+
+    public StuddyBuddiesManager getStuddyBuddiesManager() {
+        return studdyBuddiesManager;
     }
 }
