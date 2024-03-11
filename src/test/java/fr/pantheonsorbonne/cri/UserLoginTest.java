@@ -59,7 +59,7 @@ public class UserLoginTest {
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application de connexion !\n" +
                                  "----------------------------------------------\n" +
-                                 "Nom d'utilisateur : Mot de passe : Nom d'utilisateur ou mot de passe incorrect !\n";
+                                 "Nom d'utilisateur : Mot de passe : Nom d'utilisateur ou mot de passe incorrect. Réessayez ou inscrivez-vous.\n";
         assertEquals(expectedOutput, outputStream.toString());
     }
 }

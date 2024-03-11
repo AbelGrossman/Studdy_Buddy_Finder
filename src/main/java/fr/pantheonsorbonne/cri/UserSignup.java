@@ -34,15 +34,15 @@ public abstract class UserSignup {
         System.out.print("Mot de passe : ");
         String userPassword = scanner.nextLine();
 
-        System.out.println("Veuillez saisir jusqu'à trois lieux de résidence : ");
+        System.out.println("Veuillez saisir jusqu'à deux lieux de résidence : ");
         String location1 = scanner.nextLine();
         String location2 = scanner.nextLine();
 
-        System.out.println("Veuillez saisir jusqu'à trois centres d'intérêt : ");
+        System.out.println("Veuillez saisir jusqu'à deux centres d'intérêt : ");
         String interest1 = scanner.nextLine();
         String interest2 = scanner.nextLine();
 
-        System.out.println("Veuillez saisir votre filière d'études : ");
+        System.out.print("Veuillez saisir votre filière d'études : ");
         String userStudies = scanner.nextLine();
 
         // Enregistrer l'utilisateur dans la base de données
@@ -87,11 +87,7 @@ public abstract class UserSignup {
 
             // Insérer l'utilisateur dans la base de données
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-<<<<<<< HEAD
-                    "INSERT INTO user (first_name, last_name, user_name, user_email, user_password, location_1, location_2, interest_1, interest_2,  user_studdies) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")) {
-=======
                     "INSERT INTO user (first_name, last_name, user_name, user_email, user_password, location_1, location_2, interest_1, interest_2,  user_studdies) VALUES (?,?,?,?,?,?,?,?,?,?)")) {
->>>>>>> 0bddef8ed095a1c7a7e8d660791b95e9a6c2e1d0
                 preparedStatement.setString(1, firstName);
                 preparedStatement.setString(2, lastName);
                 preparedStatement.setString(3, userName);
@@ -99,15 +95,9 @@ public abstract class UserSignup {
                 preparedStatement.setString(5, userPassword);
                 preparedStatement.setString(6, location1);
                 preparedStatement.setString(7, location2);
-<<<<<<< HEAD
-                preparedStatement.setString(9, interest1);
-                preparedStatement.setString(10, interest2);
-                preparedStatement.setString(12, userStudies);
-=======
                 preparedStatement.setString(8, interest1);
                 preparedStatement.setString(9, interest2);
                 preparedStatement.setString(10, userStudies);
->>>>>>> 0bddef8ed095a1c7a7e8d660791b95e9a6c2e1d0
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 new User(firstName, lastName, userName, userEmail, userPassword, location1, location2,

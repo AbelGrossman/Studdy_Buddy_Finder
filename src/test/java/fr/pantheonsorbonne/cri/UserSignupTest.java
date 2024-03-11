@@ -18,7 +18,7 @@ public class UserSignupTest {
     @Test
     @Order(1)
     public void testMain(){
-        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayal@gmail.com\nmashalah\nParis\nNew York\n''\nInformatique\nEconomie\nMathématiques\nMIAGE\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayal@gmail.com\nmashalah\nParis\n\nInformatique\nEconomie\nMathématiques\nMIAGE\n".getBytes()));
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
@@ -29,7 +29,7 @@ public class UserSignupTest {
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
                                  "----------------------------------------------\n" +
-                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à trois lieux de résidence : Veuillez saisir jusqu'à trois centres d'intérêt : Veuillez saisir votre filière d'études : Inscription réussie !\n";
+                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à deux lieux de résidence : \nVeuillez saisir jusqu'à deux centres d'intérêt : \nVeuillez saisir votre filière d'études : Inscription réussie !\n";
         assertEquals(expectedOutput, outputStream.toString());
 
     }
@@ -39,7 +39,7 @@ public class UserSignupTest {
     @Order(2)
     public void testMainDuplicateEmail() {
         // Simuler les saisies utilisateur avec une adresse e-mail déjà utilisée
-        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlayaltest\nlayal@gmail.com\nmashalah\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlalatest\nlayal@gmail.com\nmashalah\nParis\n\nInformatique\nEconomie\nMathématiques\nMIAGE\n".getBytes()));
 
         // Capturer la sortie standard
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -51,8 +51,8 @@ public class UserSignupTest {
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
                                  "----------------------------------------------\n" +
-                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à trois lieux de résidence : Veuillez saisir jusqu'à trois centres d'intérêt : Veuillez saisir votre filière d'études : L'adresse e-mail est déjà utilisée.\n" +
-                                 "Erreur lors de l'inscription !\n";
+                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à deux lieux de résidence : \nVeuillez saisir jusqu'à deux centres d'intérêt : \nVeuillez saisir votre filière d'études : L'adresse e-mail est déjà utilisée.\n" +
+                                 "Erreur lors de l'inscription. Veuillez réessayer.\n";
         assertEquals(expectedOutput, outputStream.toString());
     }
 
@@ -60,7 +60,7 @@ public class UserSignupTest {
     @Order(3)
     public void testMainDuplicateUsername() {
         // Simuler les saisies utilisateur avec une adresse e-mail déjà utilisée
-        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayaltest@gmail.com\nmashalah\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayalttest@gmail.com\nmashalah\nParis\n\nInformatique\nEconomie\nMathématiques\nMIAGE\n".getBytes()));
 
         // Capturer la sortie standard
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -72,8 +72,8 @@ public class UserSignupTest {
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
                                  "----------------------------------------------\n" +
-                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à trois lieux de résidence : Veuillez saisir jusqu'à trois centres d'intérêt : Veuillez saisir votre filière d'études : Le nom d'utilisateur est déjà pris.\n" +
-                                 "Erreur lors de l'inscription !\n";
+                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à deux lieux de résidence : \nVeuillez saisir jusqu'à deux centres d'intérêt : \nVeuillez saisir votre filière d'études : Le nom d'utilisateur est déjà pris.\n" +
+                                 "Erreur lors de l'inscription. Veuillez réessayer.\n";
         assertEquals(expectedOutput, outputStream.toString());
     }
     
