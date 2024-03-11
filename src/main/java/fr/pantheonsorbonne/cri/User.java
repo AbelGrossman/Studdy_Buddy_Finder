@@ -49,40 +49,68 @@ public class User {
         this.userName = userName;
     }
 
-    public void setUserPassword(String password) {
-        this.userPassword = password;
-    }
-
     public String getUserStudies() {
         return this.userStudies;
+    }
+
+    public void setUserStudies(String userStudies) {
+        this.userStudies = userStudies;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUserName() {
         return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getUserEmail() {
         return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getUserPassword() {
         return userPassword;
     }
 
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
     public String getLocation1() {
         return location1;
     }
 
+    public void setLocation1(String location1) {
+        this.location1 = location1;
+    }
+
     public String getLocation2() {
         return location2;
+    }
+
+    public void setLocation2(String location2) {
+        this.location2 = location2;
     }
 
     public List<User> getStuddyBuddies() {
@@ -93,8 +121,16 @@ public class User {
         return this.interest1;
     }
 
+    public void setInterest1(String interest1) {
+        this.interest1 = interest1;
+    }
+
     public String getInterest2() {
         return this.interest2;
+    }
+
+    public void setInterest2(String interest2) {
+        this.interest2 = interest2;
     }
 
     public int getUserId() {

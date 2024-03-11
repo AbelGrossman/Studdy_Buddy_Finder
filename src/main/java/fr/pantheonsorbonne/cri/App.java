@@ -16,9 +16,10 @@ public class App {
             System.out.println("Menu :");
             System.out.println("1. S'inscrire");
             System.out.println("2. Se connecter");
-            System.out.println("3. Créer un groupe");
-            System.out.println("4. Rejoindre un groupe");
-            System.out.println("5. Rechercher un utilisateur");
+            System.out.println("3. Modifier le profil");
+            System.out.println("4. Créer un groupe");
+            System.out.println("5. Rejoindre un groupe");
+            System.out.println("6. Rechercher un utilisateur");
             System.out.println("0. Quitter");
 
             // Demander à l'utilisateur de choisir une option
