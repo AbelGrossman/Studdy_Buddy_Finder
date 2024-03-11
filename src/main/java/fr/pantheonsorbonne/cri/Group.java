@@ -5,7 +5,7 @@ import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-
+import java.sql.SQLException;
 
 public class Group {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
@@ -54,7 +54,7 @@ public class Group {
                 preparedStatement.setInt(1, this.groupId);
                 preparedStatement.executeUpdate();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error deleting group from the database" + e.getMessage());
         }
     }

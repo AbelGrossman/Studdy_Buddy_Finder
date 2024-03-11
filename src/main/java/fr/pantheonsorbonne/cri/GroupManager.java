@@ -3,16 +3,17 @@ package fr.pantheonsorbonne.cri;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Scanner;
 
-public class GroupCreation {
+public class GroupManager {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "";
 
     private static Scanner scanner = new Scanner(System.in);
 
-    public GroupCreation(User user) {
+    public GroupManager(User user) {
         String groupName = scanner.nextLine();
         String studyDomain = scanner.nextLine();
         String studyLevel = scanner.nextLine();
@@ -29,7 +30,7 @@ public class GroupCreation {
                 preparedStatement.setInt(2, user.getUserId());
                 preparedStatement.executeUpdate();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error inserting group member into the database: " + e.getMessage());
         }
     }
@@ -43,7 +44,7 @@ public class GroupCreation {
                 preparedStatement.setInt(2, user.getUserId());
                 preparedStatement.executeUpdate();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error deleting group member from the database: " + e.getMessage());
         }
     }
@@ -100,7 +101,7 @@ public class GroupCreation {
                 preparedStatement.setInt(1, group.getGroupId());
                 preparedStatement.executeUpdate();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error deleting group members from the database: " + e.getMessage());
         }
     }

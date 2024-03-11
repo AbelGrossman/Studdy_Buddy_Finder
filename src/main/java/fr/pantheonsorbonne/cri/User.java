@@ -17,10 +17,8 @@ public class User {
     private String userPassword;
     private String location1;
     private String location2;
-    private String location3;
     private String interest1;
     private String interest2;
-    private String interest3;
     private String userStudies;
     private List<User> studdyBuddies = new ArrayList<>();
     private List<User> requestList = new ArrayList<>();
@@ -28,7 +26,7 @@ public class User {
     private Map<Group, List<User>> adminRequests = new HashMap<>();
 
     public User(String firstName, String lastName, String userName, String email, String password,
-            String location1, String location2, String location3, String interest1, String interest2, String interest3,
+            String location1, String location2, String interest1, String interest2,
             String userStudies) {
         this.userId = currentId++;
         this.firstName = firstName;
@@ -38,15 +36,13 @@ public class User {
         this.userPassword = password;
         this.location1 = location1;
         this.location2 = location2;
-        this.location3 = location3;
         this.interest1 = interest1;
         this.interest2 = interest2;
-        this.interest3 = interest3;
         this.userStudies = userStudies;
     }
 
     public void createNewGroup() {
-        new GroupCreation(this);
+        new GroupManager(this);
     }
 
     public void setDbUsername(String userName) {
@@ -110,10 +106,6 @@ public class User {
         return location2;
     }
 
-    public String getLocation3() {
-        return location3;
-    }
-
     public List<User> getStuddyBuddies() {
         return studdyBuddies;
     }
@@ -124,10 +116,6 @@ public class User {
 
     public String getInterest2() {
         return this.interest2;
-    }
-
-    public String getInterest3() {
-        return this.interest3;
     }
 
     public int getUserId() {
