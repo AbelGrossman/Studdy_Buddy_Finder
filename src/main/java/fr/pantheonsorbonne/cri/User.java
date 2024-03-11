@@ -24,7 +24,7 @@ public class User {
     private List<User> requestList = new ArrayList<>();
     private List<Group> groupRequestList = new ArrayList<>();
     private Map<Group, List<User>> adminRequests = new HashMap<>();
-    private GroupManager groupManagers;
+    private GroupSelection groupManagers;
     private StuddyBuddiesManager studdyBuddiesManager;
 
     public User(String firstName, String lastName, String userName, String email, String password,
@@ -41,7 +41,6 @@ public class User {
         this.interest1 = interest1;
         this.interest2 = interest2;
         this.userStudies = userStudies;
-        this.groupManagers = new GroupManager(this);
         this.studdyBuddiesManager = new StuddyBuddiesManager(this);
     }
 
@@ -149,7 +148,7 @@ public class User {
         return requestList;
     }
 
-    public GroupManager getGroupManagers() {
+    public GroupSelection getGroupManagers() {
         return groupManagers;
     }
 

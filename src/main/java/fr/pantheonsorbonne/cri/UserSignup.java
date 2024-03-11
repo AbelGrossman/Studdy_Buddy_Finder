@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class UserSignup {
@@ -12,7 +14,9 @@ public abstract class UserSignup {
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
 
-    public static void main(String[] args) {
+    private static List<User> registeredUsers = new ArrayList<>();
+
+    public static void signup() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bienvenue dans votre application d'inscription !");
@@ -49,11 +53,15 @@ public abstract class UserSignup {
         if (registerUser(firstName, lastName, userName, userEmail, userPassword, location1, location2,
                 interest1, interest2, userStudies)) {
             System.out.println("Inscription réussie !");
+            addRegisteredUser(new User(firstName, lastName, userName, userEmail, userPassword, location1, location2,
+                    interest1,
+                    interest2, userStudies));
         } else {
             System.out.println("Erreur lors de l'inscription. Veuillez réessayer.");
         }
-        //il ne faut pas close le scanner sinon ca provoque un bug dans le menu principal.
-        //scanner.close();
+        // il ne faut pas close le scanner sinon ca provoque un bug dans le menu
+        // principal.
+        // scanner.close();
     }
 
     // Méthode pour enregistrer un nouvel utilisateur dans la base de données
@@ -101,15 +109,25 @@ public abstract class UserSignup {
                 preparedStatement.setString(10, userStudies);
 
                 int rowsAffected = preparedStatement.executeUpdate();
-                new User(firstName, lastName, userName, userEmail, userPassword, location1, location2,
-                        interest1,
-                        interest2, userStudies);
                 return rowsAffected > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    private static void addRegisteredUser(User user) {
+        registeredUsers.add(user);
+    }
+
+    public static User getRegisteredUserByUsername(String username) {
+        for (User user : registeredUsers) {
+            if (user.getUserName().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 
 }

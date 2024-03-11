@@ -4,73 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-public class GroupManager {
+public abstract class GroupMembersDatabase {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "";
 
-    private static Scanner scanner = new Scanner(System.in);
-    private User user;
-
-    public GroupManager(User user) {
-        this.user = user;
-    }
-
-    public void createNewGroup() {
-        String groupName = scanner.nextLine();
-        String studyDomain = scanner.nextLine();
-        String studyLevel = scanner.nextLine();
-        Group group = new Group(groupName, this.user, studyDomain, studyLevel);
-        insertGroupMemberIntoDatabase(group, this.user);
-    }
-
-    public void sendGroupRequest(Group group, User user) {
-        group.getAdmin().getAdminRequests().get(group).add(user);
-    }
-
-    public void answerGroupRequest(Group group, User user) {
-        boolean choice = scanner.nextBoolean();
-        if (choice) {
-            addMember(user, group);
-        }
-        group.getAdmin().getAdminRequests().get(group).remove(user);
-    }
-
-    public void sendGroupInvitation(User user, Group group) {
-        user.getGroupRequestList().add(group);
-    }
-
-    public void answerGroupInvitation(Group group, User user) {
-        boolean choice = scanner.nextBoolean();
-        if (choice) {
-            addMember(user, group);
-        }
-        user.getGroupRequestList().remove(group);
-    }
-
-    public void addMember(User member, Group group) {
-        group.getMembers().add(member);
-        insertGroupMemberIntoDatabase(group, member);
-    }
-
-    public void removeMember(User member, Group group) {
-        group.getMembers().remove(member);
-        removeGroupMemberFromDatabase(group, member);
-    }
-
-    public void leaveGroup(Group group, User user) {
-        removeMember(user, group);
-    }
-
-    public void deleteGroup(Group group) {
-        deleteGroupMembers(group);
-        group.removeGroupFromDatabase();
-        group = null;
-    }
-
-    private void insertGroupMemberIntoDatabase(Group group, User user) {
+    public static void insertGroupMemberIntoDatabase(Group group, User user) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String insertQuery = "INSERT INTO GroupMembers (group_id, user_id) VALUES (?, ?)";
 
@@ -84,7 +24,7 @@ public class GroupManager {
         }
     }
 
-    private void removeGroupMemberFromDatabase(Group group, User user) {
+    public static void removeGroupMemberFromDatabase(Group group, User user) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String deleteQuery = "DELETE FROM GroupMembers WHERE group_id = ? AND user_id = ?";
 
@@ -98,7 +38,7 @@ public class GroupManager {
         }
     }
 
-    private void deleteGroupMembers(Group group) {
+    public static void deleteGroupMembers(Group group) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String deleteQuery = "DELETE FROM GroupMembers WHERE group_id = ?";
 
@@ -109,9 +49,5 @@ public class GroupManager {
         } catch (SQLException e) {
             System.out.println("Error deleting group members from the database: " + e.getMessage());
         }
-    }
-
-    public User getUser() {
-        return user;
     }
 }

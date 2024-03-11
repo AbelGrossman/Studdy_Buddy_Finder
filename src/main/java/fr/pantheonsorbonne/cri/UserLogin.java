@@ -12,7 +12,7 @@ public abstract class UserLogin {
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
 
-    public static void main(String[] args) {
+    public static User login() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bienvenue dans votre application de connexion !");
@@ -29,11 +29,14 @@ public abstract class UserLogin {
         // Vérifier les informations d'identification
         if (login(userName, userPassword)) {
             System.out.println("Connexion réussie !");
+            return UserSignup.getRegisteredUserByUsername(userName);
         } else {
             System.out.println("Nom d'utilisateur ou mot de passe incorrect. Réessayez ou inscrivez-vous.");
         }
-        //il ne faut pas close le scanner sinon ca provoque un bug dans le menu principal.
-        //scanner.close();
+        return null;
+        // il ne faut pas close le scanner sinon ca provoque un bug dans le menu
+        // principal.
+        // scanner.close();
     }
 
     // Méthode pour vérifier les informations d'identification de l'utilisateur dans

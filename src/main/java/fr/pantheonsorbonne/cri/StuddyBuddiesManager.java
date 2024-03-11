@@ -33,7 +33,7 @@ public class StuddyBuddiesManager {
         this.user.getRequestList().remove(requestList.get(userId));
     }
 
-    public void addStuddyBuddy(User studdyBuddy) {
+    private void addStuddyBuddy(User studdyBuddy) {
         this.user.getStuddyBuddies().add(studdyBuddy);
         insertStuddyBuddyIntoDatabase(studdyBuddy);
     }

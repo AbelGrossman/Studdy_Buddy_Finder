@@ -41,7 +41,7 @@ public class Group {
                 preparedStatement.setInt(3, this.admin.getUserId());
                 preparedStatement.executeUpdate();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error inserting group into the database" + e.getMessage());
         }
     }
