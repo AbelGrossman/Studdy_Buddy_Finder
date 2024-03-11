@@ -56,6 +56,22 @@ public final class App {
                 + "interest_3 VARCHAR(100),"
                 + "user_studdies VARCHAR(100)"
                 + ")";
+        String createGroupTableQuery = "CREATE TABLE IF NOT EXISTS Group ("
+                + "group_id INT PRIMARY KEY AUTO_INCREMENT,"
+                + "group_name VARCHAR(100),"
+                + "study_domain VARCHAR(100),"
+                + "admin_id INT,"
+                + "FOREIGN KEY (admin_id) REFERENCES User(user_id)"
+                + ")";
+        String createGroupMembersTableQuery = "CREATE TABLE IF NOT EXISTS GroupMembers ("
+                + "group_id INT,"
+                + "user_id INT,"
+                + "FOREIGN KEY (group_id) REFERENCES `Group`(group_id),"
+                + "FOREIGN KEY (user_id) REFERENCES User(user_id),"
+                + "PRIMARY KEY (group_id, user_id)"
+                + ")";
         statement.executeUpdate(createUserTableQuery);
+        statement.executeUpdate(createGroupTableQuery);
+        statement.executeUpdate(createGroupMembersTableQuery);
     }
 }
