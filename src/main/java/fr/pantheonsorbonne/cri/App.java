@@ -1,25 +1,42 @@
 package fr.pantheonsorbonne.cri;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.Scanner;
 
-/**
- * The main class for the application.
- */
-public final class App {
-    private static boolean initialized = false;
+public class App {
 
-    /**
-     * main entrypoint for my class.
-     * 
-     * @param args a bunch of string from the cli
-     */
-    public static void main(final String[] args) {
-        if (!initialized) {
-            DataBaseConnection.dataBaseConnect();
-            initialized = true;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bienvenue dans l'application !");
+        System.out.println("--------------------------------");
+
+        while (true) {
+            // Afficher le menu
+            System.out.println("Menu :");
+            System.out.println("1. S'inscrire");
+            System.out.println("2. Se connecter");
+            System.out.println("0. Quitter");
+
+            // Demander à l'utilisateur de choisir une option
+            System.out.print("Veuillez choisir une option : ");
+            int choice = scanner.nextInt();
+
+            // Effectuer une action en fonction du choix de l'utilisateur
+            switch (choice) {
+                case 1:
+                    // Code pour l'inscription
+                    break;
+                case 2:
+                    // Appeler le main de UserLogin pour la connexion
+                    UserLogin.main(null);
+                    break;
+                case 0:
+                    System.out.println("Merci d'avoir utilisé l'application. Au revoir !");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Option invalide. Veuillez choisir une option valide.");
+            }
         }
     }
 }
