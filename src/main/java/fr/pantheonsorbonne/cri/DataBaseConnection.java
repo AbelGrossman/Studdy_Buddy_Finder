@@ -5,13 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DataBaseConnection {
+public abstract class DataBaseConnection {
     private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "";
 
     public static void dataBaseConnect() {
-        
+
         try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
             Statement statement = connection.createStatement();
