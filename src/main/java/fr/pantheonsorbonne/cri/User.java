@@ -39,7 +39,6 @@ public class User {
         this.interest1 = interest1;
         this.interest2 = interest2;
         this.userStudies = userStudies;
-        this.studdyBuddiesManager = new StuddyBuddiesManager(this);
     }
 
     public String getUserStudies() {

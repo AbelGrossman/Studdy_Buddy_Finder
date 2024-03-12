@@ -14,41 +14,39 @@ public class StuddyBuddiesManager {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    private User user;
-
-    public StuddyBuddiesManager(User user) {
-        this.user = user;
+    public static void sendStuddyBuddyRequest(User user, User studdyBuddy) {
+        studdyBuddy.getRequestList().add(user);
     }
 
-    public void sendStuddyBuddyRequest(User studdyBuddy) {
-        studdyBuddy.getRequestList().add(this.user);
-    }
-
-    public void answerStuddyBuddyRequest(List<User> requestList, int userId) {
+    public static void answerStuddyBuddyRequest(User user, User askingUser) {
         boolean choice = scanner.nextBoolean();
         if (choice) {
-            addStuddyBuddy(requestList.get(userId));
-            requestList.get(userId).getStuddyBuddiesManager().addStuddyBuddy(this.user);
+            System.out.println(askingUser.getFirstName() + " " + askingUser.getLastName() + " is your new Studdy Buddy !");
+            addStuddyBuddy(user, askingUser);
+            addStuddyBuddy(askingUser, user);
         }
-        this.user.getRequestList().remove(requestList.get(userId));
+        else{
+            System.out.println("You refused " + askingUser.getFirstName() + " " + askingUser.getLastName() + "'s Studdy Buddy request.");
+        }
+        user.getRequestList().remove(askingUser);
     }
 
-    private void addStuddyBuddy(User studdyBuddy) {
-        this.user.getStuddyBuddies().add(studdyBuddy);
-        insertStuddyBuddyIntoDatabase(studdyBuddy);
+    private static void addStuddyBuddy(User user, User studdyBuddy) {
+        user.getStuddyBuddies().add(studdyBuddy);
+        insertStuddyBuddyIntoDatabase(user, studdyBuddy);
     }
 
-    public void removeStuddyBuddy(User studdyBuddy) {
-        this.user.getStuddyBuddies().remove(studdyBuddy);
-        removeStuddyBuddyFromDatabase(studdyBuddy);
+    public static void removeStuddyBuddy(User user, User studdyBuddy) {
+        user.getStuddyBuddies().remove(studdyBuddy);
+        removeStuddyBuddyFromDatabase(user, studdyBuddy);
     }
 
-    private void insertStuddyBuddyIntoDatabase(User studdyBuddy) {
+    private static void insertStuddyBuddyIntoDatabase(User user, User studdyBuddy) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String insertQuery = "INSERT INTO StuddyBuddy (user_id, studdy_buddy_id) VALUES (?, ?)";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setInt(1, this.user.getUserId());
+                preparedStatement.setInt(1, user.getUserId());
                 preparedStatement.setInt(2, studdyBuddy.getUserId());
                 preparedStatement.executeUpdate();
             }
@@ -57,12 +55,12 @@ public class StuddyBuddiesManager {
         }
     }
 
-    private void removeStuddyBuddyFromDatabase(User studdyBuddy) {
+    private static void removeStuddyBuddyFromDatabase(User user, User studdyBuddy) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String deleteQuery = "DELETE FROM StuddyBuddy WHERE user_id = ? AND studdy_buddy_id = ?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
-                preparedStatement.setInt(1, this.user.getUserId());
+                preparedStatement.setInt(1, user.getUserId());
                 preparedStatement.setInt(2, studdyBuddy.getUserId());
                 preparedStatement.executeUpdate();
             }

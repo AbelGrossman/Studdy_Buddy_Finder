@@ -2,27 +2,31 @@ package fr.pantheonsorbonne.cri;
 
 import java.util.Scanner;
 
-public class GroupSelection {
+public abstract class GroupSelection {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    public void sendGroupRequest(Group group, User user) {
+    public static void sendGroupRequest(Group group, User user) {
         group.getAdmin().getAdminRequests().get(group).add(user);
     }
 
-    public void answerGroupRequest(Group group, User user) {
+    public static void answerGroupRequest(Group group, User user) {
         boolean choice = scanner.nextBoolean();
         if (choice) {
+            System.out.println("You joined "+group.getGroupName());
             addMember(user, group);
+        }
+        else{
+            System.out.println("You refused to join "+group.getGroupName());
         }
         group.getAdmin().getAdminRequests().get(group).remove(user);
     }
 
-    public void sendGroupInvitation(User user, Group group) {
+    public static void sendGroupInvitation(User user, Group group) {
         user.getGroupRequestList().add(group);
     }
 
-    public void answerGroupInvitation(Group group, User user) {
+    public static void answerGroupInvitation(Group group, User user) {
         boolean choice = scanner.nextBoolean();
         if (choice) {
             addMember(user, group);
@@ -30,17 +34,17 @@ public class GroupSelection {
         user.getGroupRequestList().remove(group);
     }
 
-    private void addMember(User member, Group group) {
+    private static void addMember(User member, Group group) {
         group.getMembers().add(member);
         GroupMembersDatabase.insertGroupMemberIntoDatabase(group, member);
     }
 
-    private void removeMember(User member, Group group) {
+    public static void removeMember(User member, Group group) {
         group.getMembers().remove(member);
         GroupMembersDatabase.removeGroupMemberFromDatabase(group, member);
     }
 
-    public void leaveGroup(Group group, User user) {
+    public static void leaveGroup(Group group, User user) {
         removeMember(user, group);
     }
 
