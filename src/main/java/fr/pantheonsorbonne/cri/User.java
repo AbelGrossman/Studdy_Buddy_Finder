@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class User {
-    private static Scanner scanner = new Scanner(System.in);
     private static int currentId = 0;
     private int userId;
     private String firstName;
@@ -42,10 +40,6 @@ public class User {
         this.interest2 = interest2;
         this.userStudies = userStudies;
         this.studdyBuddiesManager = new StuddyBuddiesManager(this);
-    }
-
-    public void setDbUsername(String userName) {
-        this.userName = userName;
     }
 
     public String getUserStudies() {
@@ -143,7 +137,7 @@ public class User {
     public List<Group> getGroupRequestList() {
         return this.groupRequestList;
     }
-    
+
     public List<User> getRequestList() {
         return requestList;
     }

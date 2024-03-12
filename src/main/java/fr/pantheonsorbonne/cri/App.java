@@ -26,9 +26,9 @@ public class App {
 
             // Demander à l'utilisateur de choisir une option
             System.out.print("Veuillez choisir une option : ");
+
             if (scanner.hasNextInt()) {
                 int choice = scanner.nextInt();
-
                 // Effectuer une action en fonction du choix de l'utilisateur
                 switch (choice) {
                     case 1:
@@ -38,7 +38,6 @@ public class App {
                     case 2:
                         // Appeler le main de UserLogin pour la connexion
                         currentUser = UserLogin.login();
-                        scanner = new Scanner(System.in);
                         break;
                     case 3:
                         // Code pour modifier le profil
@@ -77,98 +76,112 @@ public class App {
                         break;
                     default:
                         System.out.println("Option invalide. Veuillez choisir une option valide.");
+                        break;
                 }
-            } else
-
-            {
+            } else {
                 System.out.println("Veuillez saisir un nombre correspondant à une option valide.");
                 scanner.nextLine(); // Pour vider le buffer du scanner
             }
-            scanner.close();
         }
     }
 
     public static void groupSelectionCases() {
         int groupId = scanner.nextInt();
         Group currentGroup = GroupCreation.getCreatedGroupById(groupId);
-        if (currentGroup != null) {
-            boolean groupRunning = true;
-
-            if (currentUser != currentGroup.getAdmin()) {
-                while (groupRunning) {
-                    System.out.println("Group Menu :");
-                    System.out.println("1. Send Group Request");
-                    System.out.println("2. Answer Group Invitation");
-                    System.out.println("3. Leave Group");
-                    System.out.println("0. Quit Group Menu");
-
-                    System.out.print("Veuillez choisir une option : ");
-                    if (scanner.hasNextInt()) {
-                        int groupOption = scanner.nextInt();
-                        switch (groupOption) {
-                            case 1:
-
-                                System.out.println(
-                                        "Vous avez choisi d'envoyer une demande d'accès au groupe.");
-
-                                break;
-                            case 2:
-                                System.out.println(
-                                        "Vous avez choisi de répondre à une invitation à rejoindre le groupe.");
-                                break;
-                            case 3:
-                                System.out.println("Vous avez choisi de quitter le groupe.");
-                                break;
-                            case 0:
-                                groupRunning = false;
-                                break;
-                            default:
-                                System.out.println(
-                                        "Option invalide. Veuillez choisir une option valide.");
-                                break;
-                        }
+        boolean groupRunning = true;
+        if (currentUser != currentGroup.getAdmin()) {
+            while (groupRunning) {
+                System.out.println("Group Menu :");
+                System.out.println("1. Send Group Request");
+                System.out.println("2. Answer Group Invitation");
+                System.out.println("3. Leave Group");
+                System.out.println("0. Quit Group Menu");
+                System.out.print("Veuillez choisir une option : ");
+                if (scanner.hasNextInt()) {
+                    int groupResult = groupUserSelectionCases(currentGroup);
+                    if (groupResult == 0) {
+                        groupRunning = false;
                     }
+                } else {
+                    System.out.println("Veuillez saisir un nombre correspondant à une option valide.");
+                    scanner.nextLine(); // Pour vider le buffer du scanner
                 }
-            } else {
-                while (groupRunning) {
-                    System.out.println("Group Menu :");
-                    System.out.println("1. Answer Group Request");
-                    System.out.println("2. Send Group Invitation");
-                    System.out.println("3. Remove Group Member");
-                    System.out.println("4. Delete Group");
-                    System.out.println("0. Quit Group Menu");
-
-                    System.out.print("Veuillez choisir une option : ");
-                    if (scanner.hasNextInt()) {
-                        int groupOption = scanner.nextInt();
-                        switch (groupOption) {
-                            case 1:
-                                System.out.println(
-                                        "Vous avez choisi de répondre à une demande d'accès au groupe.");
-                                break;
-                            case 2:
-                                System.out.println(
-                                        "Vous avez choisi d'envoyer une invitation à rejoindre le groupe.");
-                                break;
-                            case 3:
-                                System.out
-                                        .println("Vous avez choisi de supprimer un membre du groupe.");
-                                break;
-                            case 4:
-                                System.out.println("Vous avez choisi de supprimer le groupe.");
-                                break;
-                            case 0:
-                                groupRunning = false;
-                                break;
-                            default:
-                                System.out.println(
-                                        "Option invalide. Veuillez choisir une option valide.");
-                                break;
-                        }
+            }
+        } else {
+            while (groupRunning && currentGroup != null) {
+                System.out.println("Group Admin Menu :");
+                System.out.println("1. Answer Group Request");
+                System.out.println("2. Send Group Invitation");
+                System.out.println("3. Remove Group Member");
+                System.out.println("4. Delete Group");
+                System.out.println("0. Quit Group Admin Menu");
+                System.out.print("Veuillez choisir une option : ");
+                if (scanner.hasNextInt()) {
+                    int groupResult = groupAdminSelectionCases(currentGroup);
+                    if (groupResult == 4) {
+                        currentGroup = null;
+                    } else if (groupResult == 0) {
+                        groupRunning = false;
                     }
+                } else {
+                    System.out.println("Veuillez saisir un nombre correspondant à une option valide.");
+                    scanner.nextLine(); // Pour vider le buffer du scanner
                 }
             }
         }
+    }
+
+    public static int groupAdminSelectionCases(Group currentGroup) {
+        int groupOption = scanner.nextInt();
+        switch (groupOption) {
+            case 1:
+                System.out.println(
+                        "Vous avez choisi de répondre à une demande d'accès au groupe.");
+                break;
+            case 2:
+                System.out.println(
+                        "Vous avez choisi d'envoyer une invitation à rejoindre le groupe.");
+                break;
+            case 3:
+                System.out
+                        .println("Vous avez choisi de supprimer un membre du groupe.");
+                break;
+            case 4:
+                System.out.println("Vous avez choisi de supprimer le groupe.");
+                GroupSelection.deleteGroup(currentGroup);
+                return 4;
+            case 0:
+                return 0;
+            default:
+                System.out.println(
+                        "Option invalide. Veuillez choisir une option valide.");
+                break;
+        }
+        return 5;
+    }
+
+    public static int groupUserSelectionCases(Group currentGroup) {
+        int groupOption = scanner.nextInt();
+        switch (groupOption) {
+            case 1:
+                System.out.println(
+                        "Vous avez choisi d'envoyer une demande d'accès au groupe.");
+                break;
+            case 2:
+                System.out.println(
+                        "Vous avez choisi de répondre à une invitation à rejoindre le groupe.");
+                break;
+            case 3:
+                System.out.println("Vous avez choisi de quitter le groupe.");
+                break;
+            case 0:
+                return 0;
+            default:
+                System.out.println(
+                        "Option invalide. Veuillez choisir une option valide.");
+                break;
+        }
+        return 4;
     }
 
     public static void userSearchCases() {
@@ -182,11 +195,9 @@ public class App {
                 System.out.println("2. Answer Studdy Buddy Request");
                 System.out.println("3. Remove Studdy Buddy");
                 System.out.println("0. Quit Group Menu");
-
                 System.out.print("Veuillez choisir une option : ");
                 if (scanner.hasNextInt()) {
                     int groupOption = scanner.nextInt();
-
                     switch (groupOption) {
                         case 1:
                             System.out

@@ -1,9 +1,5 @@
 package fr.pantheonsorbonne.cri;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class GroupSelection {
@@ -48,9 +44,8 @@ public class GroupSelection {
         removeMember(user, group);
     }
 
-    public void deleteGroup(Group group) {
+    public static void deleteGroup(Group group) {
         GroupMembersDatabase.deleteGroupMembers(group);
         group.removeGroupFromDatabase();
-        group = null;
     }
 }
