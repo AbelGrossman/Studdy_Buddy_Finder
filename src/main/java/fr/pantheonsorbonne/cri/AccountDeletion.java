@@ -7,9 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AccountDeletion {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
+    private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "";
+    private static final String DB_PASSWORD = "root";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -29,7 +29,7 @@ public class AccountDeletion {
     }
 
     // Méthode pour supprimer un utilisateur de la base de données
-    private static boolean deleteUser(String userName, String userPassword) {
+    static boolean deleteUser(String userName, String userPassword) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String deleteQuery = "DELETE FROM User WHERE user_name = ? AND user_password = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {

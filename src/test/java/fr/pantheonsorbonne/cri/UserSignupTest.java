@@ -18,7 +18,7 @@ public class UserSignupTest {
     @Test
     @Order(1)
     public void testMain(){
-        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayal@gmail.com\nmashalah\nParis\n\nInformatique\nEconomie\nMathématiques\nMIAGE\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayal@gmail.com\nmashalah\nParis\n\nInformatique\nEconomie\nMIAGE\n".getBytes()));
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
