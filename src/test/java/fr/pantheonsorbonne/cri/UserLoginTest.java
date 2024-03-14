@@ -35,7 +35,7 @@ public class UserLoginTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserLogin
-        UserLogin.main(null);
+        UserLogin.login();
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application de connexion !\n" +
@@ -54,7 +54,7 @@ public class UserLoginTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserLogin
-        UserLogin.main(null);
+        UserLogin.login();
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application de connexion !\n" +

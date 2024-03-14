@@ -24,7 +24,7 @@ public class UserSignupTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserLogin
-        UserSignup.main(null);
+        UserSignup.signup();
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
@@ -46,7 +46,7 @@ public class UserSignupTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserSignup
-        UserSignup.main(null);
+        UserSignup.signup();
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
@@ -67,7 +67,7 @@ public class UserSignupTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserSignup
-        UserSignup.main(null);
+        UserSignup.signup();
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
