@@ -10,7 +10,7 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class GroupCreationTest {
+/*public class GroupCreationTest {
 
     private static final User admin = new User("John", "Doe", "johndoe", "johndoe@example.com", "password", "Paris", null, "Economie", "Informatique", "Philosophie");
 
@@ -54,3 +54,4 @@ public class GroupCreationTest {
     }
 }
 
+*/

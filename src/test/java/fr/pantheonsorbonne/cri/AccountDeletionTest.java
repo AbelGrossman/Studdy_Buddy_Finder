@@ -21,14 +21,14 @@ public class AccountDeletionTest {
         // Test de suppression de compte avec des identifiants incorrects
         assertFalse(AccountDeletion.deleteUser("wrongUsername", "wrongPassword"));
 
-         // Test de suppression de compte avec des identifiants corrects
-         assertTrue(AccountDeletion.deleteUser("lala", "mashalah"));
+        // Test de suppression de compte avec des identifiants corrects
+        assertTrue(AccountDeletion.deleteUser("lala", "mashalah"));
     }
 
     @Test
     public void testMain() {
         // Simuler les saisies utilisateur
-        ByteArrayInputStream in = new ByteArrayInputStream("lala\nmashalah\n".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("noamblzs\nnoam123456\n".getBytes());
         System.setIn(in);
 
         // Capturer la sortie standard
@@ -40,6 +40,24 @@ public class AccountDeletionTest {
 
         // Vérifier la sortie
         String expectedOutput = "Nom d'utilisateur : Mot de passe : Compte supprimé avec succès !\n";
+        assertEquals(expectedOutput, out.toString());
+    }
+
+    @Test
+    public void testMainWrong() {
+        // Simuler les saisies utilisateur
+        ByteArrayInputStream in = new ByteArrayInputStream("wrongUsername\nwrongPassword\n".getBytes());
+        System.setIn(in);
+
+        // Capturer la sortie standard
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        // Exécuter la méthode deleteUser
+        AccountDeletion.main(null);
+
+        // Vérifier la sortie
+        String expectedOutput = "Nom d'utilisateur : Mot de passe : Erreur lors de la suppression du compte. Veuillez réessayer.\n";
         assertEquals(expectedOutput, out.toString());
     }
 }
