@@ -49,7 +49,7 @@ public class App {
                     loggedInCases();
                 }
             } else {
-                System.out.println("\nInvalid input. Please input an integer.");
+                System.out.println("Invalid input. Please input an integer.");
                 scanner.nextLine(); // Pour vider le buffer du scanner
             }
         }
@@ -107,7 +107,7 @@ public class App {
                         break;
                 }
             } else {
-                System.out.println("\nInvalid input. Please input an integer.");
+                System.out.println("Invalid input. Please input an integer.");
                 scanner.nextLine(); // Pour vider le buffer du scanner
             }
         }
@@ -171,7 +171,7 @@ public class App {
                         break;
                 }
             } else {
-                System.out.println("\nInvalid input. Please input an integer.");
+                System.out.println("Invalid input. Please input an integer.");
                 scanner.nextLine(); // Pour vider le buffer du scanner
             }
         }
@@ -201,7 +201,7 @@ public class App {
                             groupRunning = false;
                         }
                     } else {
-                        System.out.println("\nInvalid input. Please input an integer.");
+                        System.out.println("Invalid input. Please input an integer.");
                         scanner.nextLine(); // Pour vider le buffer du scanner
                     }
                 }
@@ -222,7 +222,7 @@ public class App {
                             groupRunning = false;
                         }
                     } else {
-                        System.out.println("\nInvalid input. Please input an integer.");
+                        System.out.println("Invalid input. Please input an integer.");
                         scanner.nextLine(); // Pour vider le buffer du scanner
                     }
                 }

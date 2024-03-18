@@ -1,6 +1,5 @@
 package fr.pantheonsorbonne.cri;
 
-import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
