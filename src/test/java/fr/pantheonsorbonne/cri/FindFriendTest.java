@@ -9,6 +9,28 @@ import java.util.Scanner;
 
 public class FindFriendTest {
 
+
+    @Test
+    public void testMain(){
+        System.setIn(new ByteArrayInputStream("Abel31\noui\n".getBytes()));
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Exécuter le main de UserLogin
+        FindFriend.findFriend();
+
+        String expectedOutput = "Recherche d'ami par nom d'utilisateur !\n" +
+                                "----------------------------------------\n" +
+                                "Entrez le nom d'utilisateur de votre ami : Ami trouvé !\n" +
+                                "Nom : Abel Grossman\n" +
+                                "Centre d'intérêt 1 : Communisme\n" +
+                                "Centre d'intérêt 2 : Politique\n" +
+                                "Voulez-vous ajouter cet utilisateur en tant qu'ami ? (oui/non) : Ami ajouté avec succès !\n";
+
+        assertEquals(expectedOutput, outputStream.toString());
+    }
+
     @Test
     public void testFindFriend() {
         // Capture la sortie standard

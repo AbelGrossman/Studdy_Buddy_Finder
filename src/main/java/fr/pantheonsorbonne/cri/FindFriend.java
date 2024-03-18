@@ -12,7 +12,7 @@ public class FindFriend {
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
 
-    public static void main(String[] args) {
+    public static void findFriend() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Recherche d'ami par nom d'utilisateur !");
