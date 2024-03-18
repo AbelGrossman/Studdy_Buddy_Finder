@@ -28,10 +28,10 @@ public class AccountDeletionTest {
     @Test
     public void testMain() {
         // Simuler les saisies utilisateur
-        ByteArrayInputStream in = new ByteArrayInputStream("noamblzs\nnoam123456\n".getBytes());
-        System.setIn(in);
+        System.setIn(new ByteArrayInputStream("lala\nmashalah\n".getBytes()));
 
         // Capturer la sortie standard
+        System.setOut(new PrintStream(new ByteArrayOutputStream()));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
