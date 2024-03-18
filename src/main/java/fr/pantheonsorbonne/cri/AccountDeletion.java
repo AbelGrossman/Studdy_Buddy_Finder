@@ -8,25 +8,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AccountDeletion {
-    //private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
+    // private static final String DB_URL =
+    // "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        // Demander à l'utilisateur de saisir son nom d'utilisateur
-        System.out.print("Nom d'utilisateur : ");
-        String userName = scanner.nextLine();
-
-        System.out.print("Mot de passe : ");
-        String userPassword = scanner.nextLine();
-
+    public static void deleteAccount(User user) {
         // Supprimer l'utilisateur de la base de données
-        if (deleteUser(userName, userPassword)) {
-            System.out.println("Compte supprimé avec succès !");
+        if (deleteUser(user.getUserName(), user.getUserPassword())) {
+            System.out.println("Account deleted successfully!");
         } else {
-            System.out.println("Erreur lors de la suppression du compte. Veuillez réessayer.");
+            System.out.println("Error deleting account. Please try again.");
         }
     }
 
@@ -62,6 +55,5 @@ public class AccountDeletion {
             return false;
         }
     }
-
 
 }

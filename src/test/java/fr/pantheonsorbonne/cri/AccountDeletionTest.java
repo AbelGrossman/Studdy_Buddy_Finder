@@ -36,7 +36,8 @@ public class AccountDeletionTest {
         System.setOut(new PrintStream(out));
 
         // Exécuter la méthode deleteUser
-        AccountDeletion.main(null);
+        //String firstName, String lastName, String userName, String email, String password, String location1, String location2, String interest1, String interest2, String userStudies
+        AccountDeletion.deleteAccount(new User("layal", "elzein", "lala", "lala@gmail.com", "mashalah", "Paris", "Cairo", "Computer Science", "Mathematics", "Licence MIAGE"));
 
         // Vérifier la sortie
         String expectedOutput = "Nom d'utilisateur : Mot de passe : Compte supprimé avec succès !\n";
@@ -54,7 +55,7 @@ public class AccountDeletionTest {
         System.setOut(new PrintStream(out));
 
         // Exécuter la méthode deleteUser
-        AccountDeletion.main(null);
+        AccountDeletion.deleteAccount(new User("layal", "elzein", "lala", "lala@gmail.com", "mashalah", "Paris", "Cairo", "Computer Science", "Mathematics", "Licence MIAGE"));;
 
         // Vérifier la sortie
         String expectedOutput = "Nom d'utilisateur : Mot de passe : Erreur lors de la suppression du compte. Veuillez réessayer.\n";
