@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.pantheonsorbonne.cri.Controller.GroupController;
+
 public class User {
     private static int currentId = 0;
     private int userId;
