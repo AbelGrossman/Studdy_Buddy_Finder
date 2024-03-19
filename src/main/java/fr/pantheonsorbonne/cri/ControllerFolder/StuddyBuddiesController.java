@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class StuddyBuddiesController {
+public abstract class StuddyBuddiesController {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "";

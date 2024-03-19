@@ -47,6 +47,7 @@ public abstract class MeetingController {
         // Créer une réunion
         Meeting meeting = new Meeting(group, date, startTime, endTime, meetingLocation, amountOfParticipants,
                 reservationRequired, admin);
+        admin.addEventToCalendar(meeting);
         addCreatedMeeting(meeting);
     }
 
@@ -56,13 +57,15 @@ public abstract class MeetingController {
 
     public static void joinMeeting(User user, Meeting meeting) {
         meeting.getParticipants().add(user);
+        user.addEventToCalendar(meeting);
         MeetingMembersDatabase.insertMeetingParticipantIntoDatabase(meeting, user);
 
-        //user.getCalendar().addEvent(meeting);
+        // user.getCalendar().addEvent(meeting);
     }
 
     public static void leaveMeeting(User user, Meeting meeting) {
         meeting.getParticipants().remove(user);
+        user.removeEventFromCalendar(meeting);
         MeetingMembersDatabase.removeMeetingParticipantFromDatabase(meeting, user);
     }
 

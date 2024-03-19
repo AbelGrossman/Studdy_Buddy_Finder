@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDelete {
+public abstract class UserDelete {
     // private static final String DB_URL =
     // "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";

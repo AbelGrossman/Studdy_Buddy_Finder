@@ -9,7 +9,7 @@ import fr.pantheonsorbonne.cri.ControllerFolder.*;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class App {
+public abstract class App {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean running = true;
     private static User currentUser = null;

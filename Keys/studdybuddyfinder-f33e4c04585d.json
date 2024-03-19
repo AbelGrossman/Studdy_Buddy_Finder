@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "studdybuddyfinder",
+  "private_key_id": "f33e4c04585dfa1eb63485a86a330709e7d62c63",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC2UVSjVnbFfVK3\npuachtnUr0pLRK7+wcYXqIB1YkzLiKA4xhU/LTN3QAq5N0t0BwOrlaRnkWGoalnF\nF1giH2fKcZXZ1GNOQq89CgeMa8B4huJADqgiSrmXar5LfmmPrrgiiLNQYYBZU2VL\nEcfFTXuQhGkbovw3sBmprz4j3DKfqWd9CnULOkDkjmINE58qHt4URSoK/dZP3etK\n/xmK9Y8rb5++HcOQkvq7tEyaXxUVxgRDVbbStO5AUaVI/U3wOzMROui8oTr38d+O\nkXNrs+ce/POHeDL7RgqTtRHyKrLLS0YAGbP3XSTBt3lj1a0LYHpo9pVYXQxjDK1G\n6ID8MDivAgMBAAECggEADR5YXxG8pW85bCTimRwMQS/abQS51sjt+QvTL8nCntlA\n4MpCrci8gvXPumNj1tXJCif6rB0bkCO+5oih0IAUAXl01TdhbI3YetA673wICGQk\nPtm5zWXfvtPGcjuGsE5byi2t7A29T4V0V2zQbr5UMszkR0HOBi/HWPIBdaZwL2lr\nnr9HHfm9PlrgxGKWUo5Zm3v9FXIHxjs5B5fvxiRbZZ2E4U0kAk+2jjYFpUsoVabz\nATbmtuXKCE/ZeiEuqe+AbiZrjKqn8ss1fSihwNgDnGq0VzVrtlL+E+VWER+k+8iw\nbnOmGfyMJ6Ho+41AhPT8B/AACq7PhCdQAkdGetmpEQKBgQDmxN/ghcIJslT/BSVT\nWjV//z3Mw+TVic/Zb1OVVQu6oiCmpk8HWj9JmJOVFFYeC/NlA2SOFfPblvHYqp8l\np/MWu7Y/XCoNGHUuOW0BRLdcBKvKIcqtjTq6gACa92NqFUFIzylSK6ZBDDWunVYm\n1oeRdkXznvFrkFHPAIx5yNHdxwKBgQDKQFLw4t6NlHouUm4DcIwAvEFLSP3UVaBg\no4CzPLEylM3HaXRLSd4F1EolT6sIQfn2cbE2dvxpmyOpHbCKTOe7LdMISLsdAGBk\nzdDrv2tWOMqK9LN/QUX5sbG3W3Yec9OU5d+mTsz6B4NjJwIG0cOYBzoWfrnYXGAO\nH77z0Dbt2QKBgQCUTIiivNKJcLT2fdQS0LH444pPgMQaBkowLT7FhLXY5j+dWNsI\nmpJ5NTgCYeNFw+BSVe/U736a61HYLy2/AUNSpKbl6NCNQd5sKjNG0WYUGFxdtYGO\nLmhDWecJr1mP3sDpjVe8mphozPPilvG6W7sbW6pweQAkY8ZvBKdBzDAyGQKBgAkK\nAOr1KL8pIKDLXFFZCVjLERv9QiLoRMes5wabssuw7NV5uBHZVkvqZfnu6pTu5e4G\nvMXTYYqSvXBEfGxh7YVnEeRv47TzHFvE+w5eOrzawuqc7xzD3Q3AzFGGi+vmf1FL\nSMiVAwI1rcCTsLp/S3+S6xywQzwRPNXEw3MAHkRZAoGAZSnygovDRviYtMG09iOH\nr/4GOSe16DJQ3fsAO9hx2LBq+L3jkpo03fLtkl//ZYNRNoYN9+zGvFGzHRcuwJXY\nurqgiCLe+oHOkjyQGcdo2P8xoYdC036+YL9bnRhCzTpYqZSBsF+upJdrUXvpYmnK\nuleRosnCXyKkxTIV1mn8sLU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "abel-386@studdybuddyfinder.iam.gserviceaccount.com",
+  "client_id": "117686075622335860231",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/abel-386%40studdybuddyfinder.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

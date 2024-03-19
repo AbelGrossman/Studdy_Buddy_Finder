@@ -3,6 +3,10 @@ package fr.pantheonsorbonne.cri.MeetingFolder;
 import fr.pantheonsorbonne.cri.UserFolder.*;
 import fr.pantheonsorbonne.cri.GroupFolder.*;
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,6 +28,9 @@ public class Meeting {
     private LocalTime meetingStartTime;
     private LocalTime meetingEndTime;
     private String meetingLocation;
+    private double latitude;
+    private double longitude;
+    private String googleMapsLink;
     private List<User> participants = new ArrayList<>();
     private int amountOfParticipants;
     private boolean reservationRequired;
@@ -38,11 +45,29 @@ public class Meeting {
         this.meetingStartTime = meetingStartTime;
         this.meetingEndTime = meetingEndTime;
         this.meetingLocation = meetingLocation;
+        this.latitude = 0;
+        this.longitude = 0;
+        this.googleMapsLink = generateGoogleMapsLink(meetingLocation);
         this.participants.add(meetingAdmin);
         this.amountOfParticipants = amountOfParticipants;
         this.reservationRequired = reservationRequired;
         this.meetingAdmin = meetingAdmin;
         insertMeetingIntoDatabase();
+    }
+
+    private String generateGoogleMapsLink(String meetingLocation) {
+        try {
+            GeoApiContext context = new GeoApiContext.Builder().apiKey("YOUR_API_KEY").build();
+            GeocodingResult[] results = GeocodingApi.geocode(context, meetingLocation).await();
+            if (results.length > 0) {
+                this.latitude = results[0].geometry.location.lat;
+                this.longitude = results[0].geometry.location.lng;
+                return "https://www.google.com/maps?q=" + this.latitude + "," + this.longitude;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void insertMeetingIntoDatabase() {
@@ -116,5 +141,9 @@ public class Meeting {
 
     public Group getMeetingGroup() {
         return meetingGroup;
+    }
+
+    public String getGoogleMapsLink() {
+        return googleMapsLink;
     }
 }

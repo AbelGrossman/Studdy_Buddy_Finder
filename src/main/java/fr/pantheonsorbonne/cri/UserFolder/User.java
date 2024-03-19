@@ -1,22 +1,25 @@
 package fr.pantheonsorbonne.cri.UserFolder;
 
 import fr.pantheonsorbonne.cri.GroupFolder.*;
+import fr.pantheonsorbonne.cri.MeetingFolder.Meeting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.Events;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-@SuppressWarnings("deprecation")
 public class User {
     private static int currentId = 0;
     private int userId;
@@ -50,17 +53,66 @@ public class User {
         this.interest1 = interest1;
         this.interest2 = interest2;
         this.userStudies = userStudies;
+    }
+
+    public void addEventToCalendar(Meeting meeting) {
         try {
-            final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            final JsonFactory JSON_FACTORY = new JacksonFactory();
-            this.calendar = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, null)
-                    .setApplicationName("Studdy Buddy Finder").build();
-        } catch (GeneralSecurityException e) {
-            // Handle the GeneralSecurityException
-            e.printStackTrace();
+            Event event = new Event()
+                    .setSummary("Meeting: " + meeting.getMeetingId())
+                    .setDescription("Meeting with group: " + meeting.getMeetingGroup().getGroupName());
+
+            LocalDate meetingDate = meeting.getMeetingDate();
+            LocalTime startTime = meeting.getMeetingStartTime();
+            LocalTime endTime = meeting.getMeetingEndTime();
+
+            LocalDateTime startDateTime = LocalDateTime.of(meetingDate, startTime);
+            LocalDateTime endDateTime = LocalDateTime.of(meetingDate, endTime);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+            String startStr = startDateTime.format(formatter);
+            String endStr = endDateTime.format(formatter);
+
+            DateTime start = new DateTime(startStr);
+            DateTime end = new DateTime(endStr);
+
+            EventDateTime startEventDateTime = new EventDateTime().setDateTime(start);
+            EventDateTime endEventDateTime = new EventDateTime().setDateTime(end);
+
+            event.setStart(startEventDateTime);
+            event.setEnd(endEventDateTime);
+
+            String calendarId = "primary";
+            this.calendar.events().insert(calendarId, event).execute();
         } catch (IOException e) {
-            // Handle the IOException
             e.printStackTrace();
+        }
+    }
+
+    public void removeEventFromCalendar(Meeting meeting) {
+        try {
+            this.calendar.events().delete("primary", "Meeting: " + meeting.getMeetingId()).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Event> getCalendarEvents() {
+        try {
+            // Fetch events from the user's calendar
+            DateTime now = new DateTime(System.currentTimeMillis());
+            Events events = this.calendar.events().list("primary")
+                    .setMaxResults(10)
+                    .setTimeMin(now)
+                    .setOrderBy("startTime")
+                    .setSingleEvents(true)
+                    .execute();
+
+            // Get the list of events
+            List<Event> items = events.getItems();
+            return items;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
