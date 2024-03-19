@@ -1,4 +1,5 @@
 package fr.pantheonsorbonne.cri;
+import fr.pantheonsorbonne.cri.StuddyBuddyFolder.FindFriend;
 
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;

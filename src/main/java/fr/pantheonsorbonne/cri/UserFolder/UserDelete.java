@@ -23,7 +23,7 @@ public class UserDelete {
     }
 
     // Méthode pour supprimer un utilisateur de la base de données
-    static boolean deleteUser(String userName, String userPassword) {
+    public static boolean deleteUser(String userName, String userPassword) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             // Vérifier si l'utilisateur existe et le mot de passe correspond
             String checkUserQuery = "SELECT COUNT(*) FROM User WHERE user_name = ? AND user_password = ?";
