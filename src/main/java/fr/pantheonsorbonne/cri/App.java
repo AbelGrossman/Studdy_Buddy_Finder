@@ -76,13 +76,13 @@ public class App {
                         // Code pour modifier le profil
                         System.out.println("You chose to modifiy your profile.");
                         // Appeler la méthode pour modifier le profil
-                        UserUpdate.updateUserProfile(currentUser);
+                        UserManager.updateUserProfile(currentUser);
                         break;
                     case 2:
                         // Code pour créer un groupe
                         System.out.println("You chose to create a group.");
                         // Appeler la méthode pour créer un groupe
-                        GroupCreation.createGroup(currentUser);
+                        GroupController.createGroup(currentUser);
                         break;
                     case 3:
                         // Code pour rechercher un utilisateur
@@ -181,18 +181,17 @@ public class App {
         boolean groupRunning = true;
         while (groupRunning) {
             int groupId = scanner.nextInt();
-            Group currentGroup = GroupCreation.getCreatedGroupById(groupId);
+            Group currentGroup = GroupController.getCreatedGroupById(groupId);
             if (currentGroup == null) {
                 throw new NoSuchElementException("The group doesn't exist");
-            }
-            if (currentUser.getGroupRequestList().contains(currentGroup)) {
-                System.out.println("You have a group invitation for " + currentGroup.getGroupName() + ".");
-                GroupSelection.answerGroupInvitation(currentGroup, currentUser);
-            } else if (currentUser != currentGroup.getAdmin()) {
+            } else if (currentUser != currentGroup.getGroupAdmin()) {
                 while (groupRunning) {
                     System.out.println("Group Menu :");
                     System.out.println("1. Send Group Request");
                     System.out.println("2. Leave Group");
+                    System.out.println("3. Schedule Meeting");
+                    System.out.println("4. View Meetings");
+                    System.out.println("5. Answer Group Invitation");
                     System.out.println("0. Leave User Group Menu");
                     System.out.print("Please choose an option : ");
                     if (scanner.hasNextInt()) {
@@ -212,8 +211,10 @@ public class App {
                     System.out.println("2. Send Group Invitation");
                     System.out.println("3. Remove Group Member");
                     System.out.println("4. Delete Group");
+                    System.out.println("5. Schedule Meeting");
+                    System.out.println("6. View Meetings");
                     System.out.println("0. Leave Admin Group Menu");
-                    System.out.print("Veuillez choisir une option : ");
+                    System.out.print("Please choose an option : ");
                     if (scanner.hasNextInt()) {
                         int groupResult = groupAdminSelectionCases(currentGroup);
                         if (groupResult == 4) {
@@ -235,11 +236,23 @@ public class App {
         switch (groupOption) {
             case 1:
                 System.out.println("You chose to send a group request.");
-                GroupSelection.sendGroupRequest(currentGroup, currentUser);
+                GroupController.sendGroupRequest(currentGroup, currentUser);
                 break;
             case 2:
                 System.out.println("You chose to leave the group.");
-                GroupSelection.leaveGroup(currentGroup, currentUser);
+                GroupController.leaveGroup(currentGroup, currentUser);
+                break;
+            case 3:
+                System.out.println("You chose to join a meeting.");
+                MeetingController.createMeeting(currentUser, currentGroup);
+                break;
+            case 4:
+                System.out.println("You chose to view the meetings.");
+                viewMeetings(currentGroup, currentUser);
+                break;
+            case 5:
+                System.out.println("You chose to answer a group invitation.");
+                GroupController.answerGroupInvitation(currentGroup, currentUser);
                 break;
             case 0:
                 System.out.println("Back to the main Menu");
@@ -249,6 +262,94 @@ public class App {
                 break;
         }
         return 4;
+    }
+
+    public static void viewMeetings(Group currentGroup, User currentUser) {
+        boolean meetingRunning = true;
+        while (meetingRunning) {
+            int meetingId = scanner.nextInt();
+            Meeting currentMeeting = MeetingController.getCreatedMeetingById(meetingId);
+            if (currentMeeting == null) {
+                throw new NoSuchElementException("The meeting doesn't exist");
+            } else if (currentUser != currentMeeting.getMeetingAdmin()) {
+                while (meetingRunning) {
+                    System.out.println("Meeting Menu :");
+                    System.out.println("1. Join Meeting");
+                    System.out.println("2. Leave Meeting");
+                    System.out.println("0. Back to the Group Menu");
+                    System.out.print("Please choose an option : ");
+                    if (scanner.hasNextInt()) {
+                        int meetingResult = meetingMemberSelectionCases(currentMeeting);
+                        if (meetingResult == 0) {
+                            meetingRunning = false;
+                        }
+                    } else {
+                        System.out.println("Invalid input. Please input an integer.");
+                        scanner.nextLine(); // Pour vider le buffer du scanner
+                    }
+                }
+            } else {
+                while (meetingRunning) {
+                    System.out.println("Meeting Admin Menu :");
+                    System.out.println("1. Remove Meeting");
+                    System.out.println("0. Back to the Group Menu");
+                    System.out.print("Please choose an option : ");
+                    if (scanner.hasNextInt()) {
+                        int meetingResult = meetingAdminSelectionCases(currentMeeting);
+                        if (meetingResult == 1) {
+                            currentMeeting = null;
+                        } else if (meetingResult == 0) {
+                            meetingRunning = false;
+                        }
+                    } else {
+                        System.out.println("Invalid input. Please input an integer.");
+                        scanner.nextLine(); // Pour vider le buffer du scanner
+                    }
+                }
+            }
+            System.out.println("Meeting Menu :");
+            System.out.println("0. Back to the Group Menu");
+            System.out.print("Please choose an option : ");
+
+        }
+    }
+
+    public static int meetingMemberSelectionCases(Meeting currentMeeting) {
+        int meetingOption = scanner.nextInt();
+        switch (meetingOption) {
+            case 1:
+                System.out.println("You chose to join the meeting.");
+                MeetingController.joinMeeting(currentUser, currentMeeting);
+                break;
+            case 2:
+                System.out.println("You chose to leave the meeting.");
+                MeetingController.leaveMeeting(currentUser, currentMeeting);
+                break;
+            case 0:
+                System.out.println("Back to the Group Menu");
+                return 0;
+            default:
+                System.out.println("Invalid option. Please choose a valid option.");
+                break;
+        }
+        return 3;
+    }
+
+    public static int meetingAdminSelectionCases(Meeting currentMeeting) {
+        int meetingOption = scanner.nextInt();
+        switch (meetingOption) {
+            case 1:
+                System.out.println("You chose to remove the meeting.");
+                MeetingController.removeMeeting(currentMeeting);
+                return 1;
+            case 0:
+                System.out.println("Back to the Group Menu");
+                return 0;
+            default:
+                System.out.println("Invalid option. Please choose a valid option.");
+                break;
+        }
+        return 2;
     }
 
     public static int groupAdminSelectionCases(Group currentGroup) {
@@ -262,7 +363,7 @@ public class App {
                                 + maxLength1);
                 int select1 = scanner.nextInt();
                 User chosenUser1 = currentUser.getAdminRequests().get(currentGroup).get(select1);
-                GroupSelection.answerGroupRequest(currentGroup, chosenUser1);
+                GroupController.answerGroupRequest(currentGroup, chosenUser1);
                 break;
             case 2:
                 System.out.println("You chose de send a group invitation");
@@ -275,7 +376,7 @@ public class App {
                 } else if (currentGroup.getMembers().contains(searchedUser)) {
                     throw new NoSuchElementException("The user is already in the group");
                 }
-                GroupSelection.sendGroupInvitation(searchedUser, currentGroup);
+                GroupController.sendGroupInvitation(searchedUser, currentGroup);
                 break;
             case 3:
                 System.out.println("You chose to remove a group member.");
@@ -285,11 +386,11 @@ public class App {
                                 + maxLength2);
                 int select2 = scanner.nextInt();
                 User chosenUser2 = currentGroup.getMembers().get(select2);
-                GroupSelection.removeMember(chosenUser2, currentGroup);
+                GroupController.removeMember(chosenUser2, currentGroup);
                 break;
             case 4:
                 System.out.println("You chose to delete the group.");
-                GroupSelection.deleteGroup(currentGroup);
+                GroupController.deleteGroup(currentGroup);
                 return 4;
             case 0:
                 System.out.println("Back to the main Menu");

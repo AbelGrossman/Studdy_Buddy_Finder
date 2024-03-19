@@ -17,14 +17,15 @@ public class Group {
     private String groupName;
     private String studyDomain;
     private String studyLevel;
-    private User admin;
+    private User groupAdmin;
     private List<User> members = new ArrayList<>();
     private int nbMembers = members.size();
 
-    public Group(String groupName, User admin, String studyDomain, String studyLevel) {
+    public Group(String groupName, User groupAdmin, String studyDomain, String studyLevel) {
         this.groupId = currentId++;
         this.groupName = groupName;
-        this.admin = admin;
+        this.groupAdmin = groupAdmin;
+        this.members.add(groupAdmin);
         this.studyDomain = studyDomain;
         this.studyLevel = studyLevel;
         insertGroupIntoDatabase();
@@ -38,7 +39,7 @@ public class Group {
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setString(1, this.groupName);
                 preparedStatement.setString(2, this.studyDomain);
-                preparedStatement.setInt(3, this.admin.getUserId());
+                preparedStatement.setInt(3, this.groupAdmin.getUserId());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -71,8 +72,8 @@ public class Group {
         return this.groupId;
     }
 
-    public User getAdmin() {
-        return this.admin;
+    public User getGroupAdmin() {
+        return this.groupAdmin;
     }
 
     public int getNbMembers() {

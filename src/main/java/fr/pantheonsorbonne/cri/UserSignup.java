@@ -18,7 +18,6 @@ public abstract class UserSignup {
 
     public static void signup() {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Bienvenue dans votre application d'inscription !");
         System.out.println("----------------------------------------------");
 

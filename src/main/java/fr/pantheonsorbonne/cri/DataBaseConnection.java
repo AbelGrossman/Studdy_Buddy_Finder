@@ -64,9 +64,20 @@ public abstract class DataBaseConnection {
                 + "FOREIGN KEY (studdy_buddy_id) REFERENCES User(user_id),"
                 + "PRIMARY KEY (user_id, studdy_buddy_id)"
                 + ")";
+        String createMeetingTableQuery = "CREATE TABLE IF NOT EXISTS Meeting ("
+                + "meeting_id INT PRIMARY KEY AUTO_INCREMENT,"
+                + "group_id INT,"
+                + "meeting_date DATE,"
+                + "meeting_start_time TIME,"
+                + "meeting_end_time TIME,"
+                + "meeting_location VARCHAR(100),"
+                + "amount_of_participants INT,"
+                + "reservation_required BOOLEAN"
+                + ")";
         statement.executeUpdate(createUserTableQuery);
         statement.executeUpdate(createGroupTableQuery);
         statement.executeUpdate(createGroupMembersTableQuery);
         statement.executeUpdate(createStuddyBuddiesTableQuery);
+        statement.executeUpdate(createMeetingTableQuery);
     }
 }

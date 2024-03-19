@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public abstract class UserUpdate {
+public abstract class UserManager {
     private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
@@ -80,17 +80,13 @@ public abstract class UserUpdate {
                         user.setUserStudies(userStudies);
                         break;
                     case 10:
-                        System.out.print("Are you sure you want to delete your account? (yes/no)");
-                        String confirmation = scanner.nextLine();
-                        switch (confirmation) {
-                            case "yes":
-                                AccountDeletion.deleteAccount(user);
-                                break;
-                            case "no":
-                                break;
-                            default:
-                                System.out.println("Could not delete account.");
-                                break;
+                        System.out.print("Are you sure you want to delete your account? (true/false)");
+                        boolean confirmation = scanner.nextBoolean();
+                        if(confirmation){
+                            AccountDeletion.deleteAccount(user);
+                        }
+                        else{
+                            System.out.println("Account deletion cancelled.");
                         }
                     case 0:
                         System.out.println("Leaving profil menu.");
