@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.ModelFolder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

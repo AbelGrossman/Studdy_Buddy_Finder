@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.StuddyBuddyFolder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

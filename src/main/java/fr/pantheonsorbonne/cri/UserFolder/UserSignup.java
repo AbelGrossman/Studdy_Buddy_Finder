@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.cri.User;
+package fr.pantheonsorbonne.cri.UserFolder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
