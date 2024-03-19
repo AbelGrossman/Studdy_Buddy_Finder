@@ -41,7 +41,7 @@ public class UserDeleteTest {
         UserDelete.deleteAccount(new User("layal", "elzein", "lala", "lala@gmail.com", "mashalah", "Paris", "Cairo", "Computer Science", "Mathematics", "Licence MIAGE"));
 
         // Vérifier la sortie
-        String expectedOutput = "Nom d'utilisateur : Mot de passe : Compte supprimé avec succès !\n";
+        String expectedOutput = "Account deleted successfully!\n";
         assertEquals(expectedOutput, out.toString());
     }
 
@@ -59,7 +59,7 @@ public class UserDeleteTest {
         UserDelete.deleteAccount(new User("layal", "elzein", "lala", "lala@gmail.com", "mashalah", "Paris", "Cairo", "Computer Science", "Mathematics", "Licence MIAGE"));;
 
         // Vérifier la sortie
-        String expectedOutput = "Nom d'utilisateur : Mot de passe : Erreur lors de la suppression du compte. Veuillez réessayer.\n";
+        String expectedOutput = "Error deleting account. Please try again.\n";
         assertEquals(expectedOutput, out.toString());
     }
 }
