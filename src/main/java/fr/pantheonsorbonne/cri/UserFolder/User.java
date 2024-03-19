@@ -52,7 +52,6 @@ public class User {
         this.userStudies = userStudies;
         try {
             final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            @SuppressWarnings("deprecation")
             final JsonFactory JSON_FACTORY = new JacksonFactory();
             this.calendar = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, null)
                     .setApplicationName("Studdy Buddy Finder").build();

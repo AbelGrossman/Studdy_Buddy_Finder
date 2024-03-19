@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public abstract class DataBaseConnection {
-    private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "";
 
@@ -43,7 +43,7 @@ public abstract class DataBaseConnection {
                 + "interest_2 VARCHAR(100),"
                 + "user_studdies VARCHAR(100)"
                 + ")";
-        String createGroupTableQuery = "CREATE TABLE IF NOT EXISTS Group ("
+        String createGroupTableQuery = "CREATE TABLE IF NOT EXISTS `Group` ("
                 + "group_id INT PRIMARY KEY AUTO_INCREMENT,"
                 + "group_name VARCHAR(100),"
                 + "study_domain VARCHAR(100),"
