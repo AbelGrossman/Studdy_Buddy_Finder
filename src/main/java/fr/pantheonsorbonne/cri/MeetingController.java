@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class MeetingManager {
+public class MeetingController {
     private static Scanner scanner = new Scanner(System.in);
 
     public static List<Meeting> createdMeetings = new ArrayList<>();

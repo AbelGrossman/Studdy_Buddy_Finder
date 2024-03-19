@@ -76,7 +76,7 @@ public class App {
                         // Code pour modifier le profil
                         System.out.println("You chose to modifiy your profile.");
                         // Appeler la méthode pour modifier le profil
-                        UserManager.updateUserProfile(currentUser);
+                        UserController.updateUserProfile(currentUser);
                         break;
                     case 2:
                         // Code pour créer un groupe

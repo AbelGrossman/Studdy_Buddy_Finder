@@ -22,7 +22,7 @@ public class User {
     private List<User> requestList = new ArrayList<>();
     private List<Group> groupRequestList = new ArrayList<>();
     private Map<Group, List<User>> adminRequests = new HashMap<>();
-    private GroupManager groupManagers;
+    private GroupController groupManagers;
     private StuddyBuddiesManager studdyBuddiesManager;
 
     public User(String firstName, String lastName, String userName, String email, String password,
@@ -141,7 +141,7 @@ public class User {
         return requestList;
     }
 
-    public GroupManager getGroupManagers() {
+    public GroupController getGroupManagers() {
         return groupManagers;
     }
 
