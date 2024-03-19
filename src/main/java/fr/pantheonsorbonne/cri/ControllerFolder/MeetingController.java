@@ -1,4 +1,9 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.ControllerFolder;
+
+import fr.pantheonsorbonne.cri.MeetingFolder.Meeting;
+import fr.pantheonsorbonne.cri.UserFolder.User;
+import fr.pantheonsorbonne.cri.GroupFolder.Group;
+import fr.pantheonsorbonne.cri.MeetingFolder.MeetingMembersDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +11,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class MeetingController {
+public abstract class MeetingController {
     private static Scanner scanner = new Scanner(System.in);
 
     public static List<Meeting> createdMeetings = new ArrayList<>();

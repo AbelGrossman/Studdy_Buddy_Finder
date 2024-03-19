@@ -1,4 +1,6 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.ControllerFolder;
+
+import fr.pantheonsorbonne.cri.UserFolder.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class StuddyBuddiesManager {
+public class StuddyBuddiesController {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "";
@@ -20,12 +22,13 @@ public class StuddyBuddiesManager {
     public static void answerStuddyBuddyRequest(User user, User askingUser) {
         boolean choice = scanner.nextBoolean();
         if (choice) {
-            System.out.println(askingUser.getFirstName() + " " + askingUser.getLastName() + " is your new Studdy Buddy !");
+            System.out.println(
+                    askingUser.getFirstName() + " " + askingUser.getLastName() + " is your new Studdy Buddy !");
             addStuddyBuddy(user, askingUser);
             addStuddyBuddy(askingUser, user);
-        }
-        else{
-            System.out.println("You refused " + askingUser.getFirstName() + " " + askingUser.getLastName() + "'s Studdy Buddy request.");
+        } else {
+            System.out.println("You refused " + askingUser.getFirstName() + " " + askingUser.getLastName()
+                    + "'s Studdy Buddy request.");
         }
         user.getRequestList().remove(askingUser);
     }

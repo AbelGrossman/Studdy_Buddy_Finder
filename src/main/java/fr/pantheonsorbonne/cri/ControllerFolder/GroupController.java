@@ -1,4 +1,7 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.ControllerFolder;
+
+import fr.pantheonsorbonne.cri.UserFolder.*;
+import fr.pantheonsorbonne.cri.GroupFolder.*;
 
 import java.util.ArrayList;
 import java.util.List;

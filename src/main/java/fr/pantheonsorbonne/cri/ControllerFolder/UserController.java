@@ -1,4 +1,6 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.ControllerFolder;
+
+import fr.pantheonsorbonne.cri.UserFolder.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public abstract class UserManager {
+public abstract class UserController {
     private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
@@ -82,10 +84,9 @@ public abstract class UserManager {
                     case 10:
                         System.out.print("Are you sure you want to delete your account? (true/false)");
                         boolean confirmation = scanner.nextBoolean();
-                        if(confirmation){
-                            AccountDeletion.deleteAccount(user);
-                        }
-                        else{
+                        if (confirmation) {
+                            UserDelete.deleteAccount(user);
+                        } else {
                             System.out.println("Account deletion cancelled.");
                         }
                     case 0:

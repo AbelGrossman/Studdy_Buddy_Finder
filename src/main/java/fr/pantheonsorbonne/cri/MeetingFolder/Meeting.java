@@ -1,4 +1,7 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.MeetingFolder;
+
+import fr.pantheonsorbonne.cri.UserFolder.*;
+import fr.pantheonsorbonne.cri.GroupFolder.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

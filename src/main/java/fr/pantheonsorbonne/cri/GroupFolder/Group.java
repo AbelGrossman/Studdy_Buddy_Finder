@@ -1,7 +1,10 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.GroupFolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.pantheonsorbonne.cri.UserFolder.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

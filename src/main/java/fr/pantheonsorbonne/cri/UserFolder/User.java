@@ -1,11 +1,11 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.UserFolder;
+
+import fr.pantheonsorbonne.cri.GroupFolder.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import fr.pantheonsorbonne.cri.Controller.GroupController;
 
 public class User {
     private static int currentId = 0;
@@ -24,8 +24,6 @@ public class User {
     private List<User> requestList = new ArrayList<>();
     private List<Group> groupRequestList = new ArrayList<>();
     private Map<Group, List<User>> adminRequests = new HashMap<>();
-    private GroupController groupManagers;
-    private StuddyBuddiesManager studdyBuddiesManager;
 
     public User(String firstName, String lastName, String userName, String email, String password,
             String location1, String location2, String interest1, String interest2,
@@ -140,14 +138,6 @@ public class User {
     }
 
     public List<User> getRequestList() {
-        return requestList;
-    }
-
-    public GroupController getGroupManagers() {
-        return groupManagers;
-    }
-
-    public StuddyBuddiesManager getStuddyBuddiesManager() {
-        return studdyBuddiesManager;
+        return this.requestList;
     }
 }

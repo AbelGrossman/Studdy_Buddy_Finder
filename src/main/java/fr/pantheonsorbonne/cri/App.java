@@ -1,4 +1,8 @@
 package fr.pantheonsorbonne.cri;
+import fr.pantheonsorbonne.cri.MeetingFolder.*;
+import fr.pantheonsorbonne.cri.UserFolder.*;
+import fr.pantheonsorbonne.cri.GroupFolder.*;
+import fr.pantheonsorbonne.cri.ControllerFolder.*;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -137,7 +141,7 @@ public class App {
                         if (searchedUser == null) {
                             throw new NoSuchElementException("The user doesn't exist.");
                         }
-                        StuddyBuddiesManager.sendStuddyBuddyRequest(currentUser, searchedUser);
+                        StuddyBuddiesController.sendStuddyBuddyRequest(currentUser, searchedUser);
                         break;
                     case 2:
                         System.out.println(
@@ -146,7 +150,7 @@ public class App {
                         System.out.println(
                                 "Select a user in your request list by choosing a number bewteen 0 and " + maxLength);
                         int select = scanner.nextInt();
-                        StuddyBuddiesManager.answerStuddyBuddyRequest(currentUser,
+                        StuddyBuddiesController.answerStuddyBuddyRequest(currentUser,
                                 currentUser.getRequestList().get(select));
                         break;
                     case 3:
@@ -158,7 +162,7 @@ public class App {
                         } else if (!currentUser.getStuddyBuddies().contains(searchedUser)) {
                             throw new NoSuchElementException("The user isn't one of your Studdy Buddies");
                         }
-                        StuddyBuddiesManager.removeStuddyBuddy(currentUser, searchedUser);
+                        StuddyBuddiesController.removeStuddyBuddy(currentUser, searchedUser);
                         System.out.println(searchedUser.getFirstName() + " " + searchedUser.getLastName()
                                 + " isn't your Studdy Buddy anymore");
                         break;
