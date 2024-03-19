@@ -28,7 +28,7 @@ public class FindFriend {
         scanner.close();
     }
 
-    static void findFriendByUsername(String username, Scanner scanner) {
+    public static void findFriendByUsername(String username, Scanner scanner) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String query = "SELECT first_name, last_name, interest_1, interest_2 FROM user WHERE user_name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

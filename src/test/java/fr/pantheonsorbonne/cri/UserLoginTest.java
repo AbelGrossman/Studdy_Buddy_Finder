@@ -1,4 +1,5 @@
 package fr.pantheonsorbonne.cri;
+import fr.pantheonsorbonne.cri.UserFolder.UserLogin;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,5 @@
 package fr.pantheonsorbonne.cri;
+import fr.pantheonsorbonne.cri.UserFolder.UserSignup;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
