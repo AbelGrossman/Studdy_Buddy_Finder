@@ -57,6 +57,8 @@ public abstract class MeetingController {
     public static void joinMeeting(User user, Meeting meeting) {
         meeting.getParticipants().add(user);
         MeetingMembersDatabase.insertMeetingParticipantIntoDatabase(meeting, user);
+
+        //user.getCalendar().addEvent(meeting);
     }
 
     public static void leaveMeeting(User user, Meeting meeting) {

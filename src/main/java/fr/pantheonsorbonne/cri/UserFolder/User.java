@@ -7,6 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.calendar.Calendar;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
+@SuppressWarnings("deprecation")
 public class User {
     private static int currentId = 0;
     private int userId;
@@ -24,6 +34,7 @@ public class User {
     private List<User> requestList = new ArrayList<>();
     private List<Group> groupRequestList = new ArrayList<>();
     private Map<Group, List<User>> adminRequests = new HashMap<>();
+    private Calendar calendar;
 
     public User(String firstName, String lastName, String userName, String email, String password,
             String location1, String location2, String interest1, String interest2,
@@ -39,6 +50,19 @@ public class User {
         this.interest1 = interest1;
         this.interest2 = interest2;
         this.userStudies = userStudies;
+        try {
+            final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            @SuppressWarnings("deprecation")
+            final JsonFactory JSON_FACTORY = new JacksonFactory();
+            this.calendar = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, null)
+                    .setApplicationName("Studdy Buddy Finder").build();
+        } catch (GeneralSecurityException e) {
+            // Handle the GeneralSecurityException
+            e.printStackTrace();
+        } catch (IOException e) {
+            // Handle the IOException
+            e.printStackTrace();
+        }
     }
 
     public String getUserStudies() {
@@ -139,5 +163,9 @@ public class User {
 
     public List<User> getRequestList() {
         return this.requestList;
+    }
+
+    public Calendar getCalendar() {
+        return this.calendar;
     }
 }

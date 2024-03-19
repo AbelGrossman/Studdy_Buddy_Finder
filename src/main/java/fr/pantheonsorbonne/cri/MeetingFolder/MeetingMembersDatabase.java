@@ -52,5 +52,5 @@ public abstract class MeetingMembersDatabase {
             System.out.println("Error deleting meeting participants from the database: " + e.getMessage());
         }
     }
-    
+
 }

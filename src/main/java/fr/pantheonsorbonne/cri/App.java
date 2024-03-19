@@ -1,5 +1,7 @@
 package fr.pantheonsorbonne.cri;
+
 import fr.pantheonsorbonne.cri.MeetingFolder.*;
+import fr.pantheonsorbonne.cri.ModelFolder.DataBaseConnection;
 import fr.pantheonsorbonne.cri.UserFolder.*;
 import fr.pantheonsorbonne.cri.GroupFolder.*;
 import fr.pantheonsorbonne.cri.ControllerFolder.*;
@@ -11,8 +13,13 @@ public class App {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean running = true;
     private static User currentUser = null;
+    private static boolean databaseCreated = false;
 
     public static void main(String[] args) {
+        if (databaseCreated == false) {
+            DataBaseConnection.dataBaseConnect();
+            databaseCreated = true;
+        }
 
         System.out.println("Welcome to Studdy Buddy Finder !");
         System.out.println("--------------------------------");
