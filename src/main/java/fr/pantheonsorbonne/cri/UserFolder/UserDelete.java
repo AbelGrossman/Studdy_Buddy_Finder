@@ -6,12 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class UserDelete {
+public class UserDelete {
     // private static final String DB_URL =
     // "jdbc:mysql://localhost:3306/studdy_buddy_finder";
-    private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "root";
+    private static final String DB_PASSWORD = "";
+
+    private UserDelete() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void deleteAccount(User user) {
         // Supprimer l'utilisateur de la base de données

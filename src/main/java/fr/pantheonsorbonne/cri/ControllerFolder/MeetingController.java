@@ -11,10 +11,14 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public abstract class MeetingController {
+public class MeetingController {
     private static Scanner scanner = new Scanner(System.in);
 
     public static List<Meeting> createdMeetings = new ArrayList<>();
+
+    private MeetingController() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void createMeeting(User admin, Group group) {
         // Demander à l'utilisateur de saisir la date de la réunion

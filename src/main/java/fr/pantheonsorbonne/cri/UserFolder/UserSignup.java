@@ -5,16 +5,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-public abstract class UserSignup {
-    private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
+public class UserSignup {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "root";
+    private static final String DB_PASSWORD = "";
 
-    private static List<User> registeredUsers = new ArrayList<>();
+    private UserSignup() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void signup() {
         Scanner scanner = new Scanner(System.in);
@@ -45,16 +45,13 @@ public abstract class UserSignup {
         String interest1 = scanner.nextLine();
         String interest2 = scanner.nextLine();
 
-        System.out.print("Veuillez saisir votre filière d'études : ");
+        System.out.print("Veuillez saisir votre filière d'études (ex: L3 MIAGE) : ");
         String userStudies = scanner.nextLine();
 
         // Enregistrer l'utilisateur dans la base de données
         if (registerUser(firstName, lastName, userName, userEmail, userPassword, location1, location2,
                 interest1, interest2, userStudies)) {
             System.out.println("Inscription réussie !");
-            addRegisteredUser(new User(firstName, lastName, userName, userEmail, userPassword, location1, location2,
-                    interest1,
-                    interest2, userStudies));
         } else {
             System.out.println("Erreur lors de l'inscription. Veuillez réessayer.");
         }
@@ -95,7 +92,7 @@ public abstract class UserSignup {
 
             // Insérer l'utilisateur dans la base de données
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO user (first_name, last_name, user_name, user_email, user_password, location_1, location_2, interest_1, interest_2,  user_studdies) VALUES (?,?,?,?,?,?,?,?,?,?)")) {
+                    "INSERT INTO user (first_name, last_name, user_name, user_email, user_password, location_1, location_2, interest_1, interest_2,  user_studies) VALUES (?,?,?,?,?,?,?,?,?,?)")) {
                 preparedStatement.setString(1, firstName);
                 preparedStatement.setString(2, lastName);
                 preparedStatement.setString(3, userName);
@@ -114,19 +111,6 @@ public abstract class UserSignup {
             e.printStackTrace();
             return false;
         }
-    }
-
-    private static void addRegisteredUser(User user) {
-        registeredUsers.add(user);
-    }
-
-    public static User getRegisteredUserByUsername(String username) {
-        for (User user : registeredUsers) {
-            if (user.getUserName().equals(username)) {
-                return user;
-            }
-        }
-        return null;
     }
 
 }

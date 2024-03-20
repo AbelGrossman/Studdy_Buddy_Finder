@@ -7,10 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public abstract class UserLogin {
-    private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
+import fr.pantheonsorbonne.cri.StuddyBuddyFolder.FindUser;
+
+public class UserLogin {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "root";
+    private static final String DB_PASSWORD = "";
+
+    private UserLogin() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static User login() {
         Scanner scanner = new Scanner(System.in);
@@ -29,7 +35,7 @@ public abstract class UserLogin {
         // Vérifier les informations d'identification
         if (login(userName, userPassword)) {
             System.out.println("Connexion réussie !");
-            return UserSignup.getRegisteredUserByUsername(userName);
+            return FindUser.getUserByUsername(userName);
         } else {
             System.out.println("Nom d'utilisateur ou mot de passe incorrect. Réessayez ou inscrivez-vous.");
         }
