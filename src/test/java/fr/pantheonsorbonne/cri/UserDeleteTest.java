@@ -1,4 +1,5 @@
 package fr.pantheonsorbonne.cri;
+
 import fr.pantheonsorbonne.cri.UserFolder.User;
 import fr.pantheonsorbonne.cri.UserFolder.UserDelete;
 import org.junit.jupiter.api.Test;
@@ -13,17 +14,19 @@ public class UserDeleteTest {
 
     @Test
     public void testDeleteUser() {
-        // Test de suppression de compte avec un nom d'utilisateur correct et un mot de passe incorrect
+        // Test de suppression de compte avec un nom d'utilisateur correct et un mot de
+        // passe incorrect
         assertFalse(UserDelete.deleteUser("lala", "wrongPassword"));
 
-        // Test de suppression de compte avec un nom d'utilisateur incorrect et un mot de passe correct
+        // Test de suppression de compte avec un nom d'utilisateur incorrect et un mot
+        // de passe correct
         assertFalse(UserDelete.deleteUser("wrongUsername", "mashalah"));
 
         // Test de suppression de compte avec des identifiants incorrects
         assertFalse(UserDelete.deleteUser("wrongUsername", "wrongPassword"));
 
         // Test de suppression de compte avec des identifiants corrects
-        //assertTrue(AccountDeletion.deleteUser("lala", "mashalah"));
+        // assertTrue(AccountDeletion.deleteUser("lala", "mashalah"));
     }
 
     @Test
@@ -37,8 +40,11 @@ public class UserDeleteTest {
         System.setOut(new PrintStream(out));
 
         // Exécuter la méthode deleteUser
-        //String firstName, String lastName, String userName, String email, String password, String location1, String location2, String interest1, String interest2, String userStudies
-        UserDelete.deleteAccount(new User("layal", "elzein", "lala", "lala@gmail.com", "mashalah", "Paris", "Cairo", "Computer Science", "Mathematics", "Licence MIAGE"));
+        // String firstName, String lastName, String userName, String email, String
+        // password, String location1, String location2, String interest1, String
+        // interest2, String userStudies
+        UserDelete.deleteAccount(new User(1, "layal", "elzein", "lala", "lala@gmail.com", "mashalah", "Paris", "Cairo",
+                "Computer Science", "Mathematics", "Licence MIAGE"));
 
         // Vérifier la sortie
         String expectedOutput = "Account deleted successfully!\n";
@@ -56,11 +62,12 @@ public class UserDeleteTest {
         System.setOut(new PrintStream(out));
 
         // Exécuter la méthode deleteUser
-        UserDelete.deleteAccount(new User("layal", "elzein", "lala", "lala@gmail.com", "mashalah", "Paris", "Cairo", "Computer Science", "Mathematics", "Licence MIAGE"));;
+        UserDelete.deleteAccount(new User(1, "layal", "elzein", "lala", "lala@gmail.com", "mashalah", "Paris", "Cairo",
+                "Computer Science", "Mathematics", "Licence MIAGE"));
+        ;
 
         // Vérifier la sortie
         String expectedOutput = "Error deleting account. Please try again.\n";
         assertEquals(expectedOutput, out.toString());
     }
 }
-

@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.cri.UserFolder;
 
 import fr.pantheonsorbonne.cri.GroupFolder.*;
 import fr.pantheonsorbonne.cri.MeetingFolder.Meeting;
+import fr.pantheonsorbonne.cri.StuddyBuddyFolder.FindUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +22,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class User {
-    private static int currentId = 0;
     private int userId;
     private String firstName;
     private String lastName;
@@ -33,16 +33,12 @@ public class User {
     private String interest1;
     private String interest2;
     private String userStudies;
-    private List<User> studdyBuddies = new ArrayList<>();
-    private List<User> requestList = new ArrayList<>();
-    private List<Group> groupRequestList = new ArrayList<>();
-    private Map<Group, List<User>> adminRequests = new HashMap<>();
     private Calendar calendar;
 
-    public User(String firstName, String lastName, String userName, String email, String password,
+    public User(int userId, String firstName, String lastName, String userName, String email, String password,
             String location1, String location2, String interest1, String interest2,
             String userStudies) {
-        this.userId = currentId++;
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
@@ -180,10 +176,6 @@ public class User {
         this.location2 = location2;
     }
 
-    public List<User> getStuddyBuddies() {
-        return studdyBuddies;
-    }
-
     public String getInterest1() {
         return this.interest1;
     }
@@ -200,20 +192,17 @@ public class User {
         this.interest2 = interest2;
     }
 
+    public void setUserId(){
+        this.userId = fetchUserId();
+    }
+
+    private int fetchUserId() {
+        User dataBaseUser = FindUser.getUserByUsername(this.userName);
+        return dataBaseUser.getUserId();
+    }
+
     public int getUserId() {
         return this.userId;
-    }
-
-    public Map<Group, List<User>> getAdminRequests() {
-        return this.adminRequests;
-    }
-
-    public List<Group> getGroupRequestList() {
-        return this.groupRequestList;
-    }
-
-    public List<User> getRequestList() {
-        return this.requestList;
     }
 
     public Calendar getCalendar() {

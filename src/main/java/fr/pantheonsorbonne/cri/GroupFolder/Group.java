@@ -1,70 +1,20 @@
 package fr.pantheonsorbonne.cri.GroupFolder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.pantheonsorbonne.cri.UserFolder.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 public class Group {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "";
-
-    private static int currentId = 0;
     private int groupId;
     private String groupName;
     private String studyDomain;
     private String studyLevel;
     private User groupAdmin;
-    private List<User> members = new ArrayList<>();
-    private int nbMembers = members.size();
 
-    public Group(String groupName, User groupAdmin, String studyDomain, String studyLevel) {
-        this.groupId = currentId++;
+    public Group(int groupId, String groupName, User groupAdmin, String studyDomain, String studyLevel) {
+        this.groupId = groupId;
         this.groupName = groupName;
         this.groupAdmin = groupAdmin;
-        this.members.add(groupAdmin);
         this.studyDomain = studyDomain;
         this.studyLevel = studyLevel;
-        insertGroupIntoDatabase();
-    }
-
-    private void insertGroupIntoDatabase() {
-
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String insertQuery = "INSERT INTO Group (group_name, study_domain, admin_id) VALUES (?, ?, ?, ?)";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setString(1, this.groupName);
-                preparedStatement.setString(2, this.studyDomain);
-                preparedStatement.setInt(3, this.groupAdmin.getUserId());
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error inserting group into the database" + e.getMessage());
-        }
-    }
-
-    public void removeGroupFromDatabase() {
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String deleteQuery = "DELETE FROM Group WHERE group_id = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
-                preparedStatement.setInt(1, this.groupId);
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error deleting group from the database" + e.getMessage());
-        }
-    }
-
-    public List<User> getMembers() {
-        return this.members;
     }
 
     public String getGroupName() {
@@ -77,14 +27,6 @@ public class Group {
 
     public User getGroupAdmin() {
         return this.groupAdmin;
-    }
-
-    public int getNbMembers() {
-        return this.nbMembers;
-    }
-
-    public void setNbMembers(int nbMembers) {
-        this.nbMembers = nbMembers;
     }
 
     public String getStudyDomain() {

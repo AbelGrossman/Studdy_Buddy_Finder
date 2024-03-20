@@ -39,7 +39,6 @@ public class Meeting {
     public Meeting(Group meetingGroup, LocalDate meetingDate, LocalTime meetingStartTime, LocalTime meetingEndTime,
             String meetingLocation,
             int amountOfParticipants, boolean reservationRequired, User meetingAdmin) {
-        this.meetingId = currentId++;
         this.meetingGroup = meetingGroup;
         this.meetingDate = meetingDate;
         this.meetingStartTime = meetingStartTime;
