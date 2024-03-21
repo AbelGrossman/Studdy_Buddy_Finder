@@ -16,6 +16,7 @@ public abstract class StuddyBuddiesController {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void sendStuddyBuddyRequest(User user, User studdyBuddy) {
+        
         studdyBuddy.getRequestList().add(user);
     }
 
