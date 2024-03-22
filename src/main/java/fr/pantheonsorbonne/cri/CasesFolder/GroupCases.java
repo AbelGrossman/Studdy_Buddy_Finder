@@ -21,7 +21,7 @@ public class GroupCases {
             System.out.println("Select a group by entering its name :");
             scanner = new Scanner(System.in);
             String groupName = scanner.nextLine();
-            Group currentGroup = FindGroup.getGroupByGroupname(groupName);
+            Group currentGroup = GroupDatabase.findGroupByGroupname(groupName);
             if (currentGroup == null) {
                 throw new NoSuchElementException("The group doesn't exist");
             } else if (currentUser.getUserId() != currentGroup.getGroupAdmin().getUserId()) {
@@ -110,18 +110,16 @@ public class GroupCases {
         switch (groupOption) {
             case 1:
                 System.out.println("You chose to answer a group request.");
-                int maxLength1 = currentUser.getAdminRequests().get(currentGroup).size() - 1;
-                System.out.println(
-                        "Select a user in your group admin request list by choosing a number bewteen 0 and "
-                                + maxLength1);
-                int select1 = scanner.nextInt();
-                User chosenUser1 = currentUser.getAdminRequests().get(currentGroup).get(select1);
+                System.out.println("Enter the username of the user you want to answer the request of :");
+                String username1 = scanner.nextLine();
+                User chosenUser1 = FindUser.getUserByUsername(username1);
                 GroupController.answerGroupRequest(currentGroup, chosenUser1);
                 break;
             case 2:
                 System.out.println("You chose de send a group invitation");
-                String username = scanner.nextLine();
-                User searchedUser = FindUser.getUserByUsername(username);
+                System.out.println("Enter the username of the user you want to invite to the group :");
+                String username2 = scanner.nextLine();
+                User searchedUser = FindUser.getUserByUsername(username2);
                 if (searchedUser == null) {
                     throw new NoSuchElementException("The user doesn't exist");
                 } else if (GroupMembersDatabase.findGroupMembers(currentGroup, searchedUser) != null) {
@@ -134,9 +132,9 @@ public class GroupCases {
             case 3:
                 System.out.println("You chose to remove a group member.");
                 System.out.println("Enter the username of the user you want to remove from the group :");
-                String username2 = scanner.nextLine();
-                User searchedUser2 = FindUser.getUserByUsername(username2);
-                GroupController.removeMember(searchedUser2, currentGroup);
+                String username3 = scanner.nextLine();
+                User chosenUser2 = FindUser.getUserByUsername(username3);
+                GroupController.removeMember(chosenUser2, currentGroup);
                 break;
             case 4:
                 System.out.println("You chose to delete the group.");

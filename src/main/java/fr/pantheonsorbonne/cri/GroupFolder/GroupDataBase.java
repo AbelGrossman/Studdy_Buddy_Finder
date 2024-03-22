@@ -3,16 +3,18 @@ package fr.pantheonsorbonne.cri.GroupFolder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import fr.pantheonsorbonne.cri.StuddyBuddyFolder.FindUser;
 import fr.pantheonsorbonne.cri.UserFolder.*;
 
-public class GroupDataBase {
+public class GroupDatabase {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "";
 
-    private GroupDataBase() {
+    private GroupDatabase() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -47,4 +49,51 @@ public class GroupDataBase {
         }
     }
 
+    public static Group findGroupByGroupname(String groupname) {
+        Group group = null;
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String query = "SELECT * FROM `Group` WHERE group_name = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, groupname);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        group = new Group(
+                                resultSet.getInt("group_id"),
+                                resultSet.getString("group_name"),
+                                FindUser.getUserById(resultSet.getInt("admin_id")),
+                                resultSet.getString("study_domain"),
+                                resultSet.getString("study_level"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting group by groupname: " + e.getMessage());
+        }
+
+        return group;
+    }
+
+    public static Group getGroupById(int groupId) {
+        Group group = null;
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String query = "SELECT * FROM `Group` WHERE group_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, groupId);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        group = new Group(
+                                resultSet.getInt("group_id"),
+                                resultSet.getString("group_name"),
+                                FindUser.getUserById(resultSet.getInt("admin_id")),
+                                resultSet.getString("study_domain"),
+                                resultSet.getString("study_level"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting group by group id: " + e.getMessage());
+        }
+
+        return group;
+    }
 }

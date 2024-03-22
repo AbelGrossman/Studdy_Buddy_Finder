@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class DataBaseConnection {
+public class DatabaseConnection {
         private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
         private static final String DB_USERNAME = "root";
         private static final String DB_PASSWORD = "";
 
-        private DataBaseConnection() {
+        private DatabaseConnection() {
                 throw new IllegalStateException("Utility class");
         }
 
@@ -63,6 +63,7 @@ public class DataBaseConnection {
                                 + ")";
                 String createMeetingTableQuery = "CREATE TABLE IF NOT EXISTS Meeting ("
                                 + "meeting_id INT PRIMARY KEY AUTO_INCREMENT,"
+                                + "meeting_name VARCHAR(100),"
                                 + "group_id INT,"
                                 + "meeting_date DATE,"
                                 + "meeting_start_time TIME,"
@@ -70,6 +71,7 @@ public class DataBaseConnection {
                                 + "meeting_location VARCHAR(100),"
                                 + "amount_of_participants INT,"
                                 + "reservation_required BOOLEAN"
+                                + "meeting_admin INT,"
                                 + ")";
                 String createMeetingParticipantsTableQuery = "CREATE TABLE IF NOT EXISTS MeetingParticipants ("
                                 + "meeting_id INT,"

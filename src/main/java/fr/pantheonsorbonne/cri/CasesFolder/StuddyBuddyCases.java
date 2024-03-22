@@ -43,14 +43,14 @@ public class StuddyBuddyCases {
                         StuddyBuddiesController.sendStuddyBuddyRequest(currentUser, searchedUser);
                         break;
                     case 2:
-                        System.out.println(
-                                "You chose to answer a Studdy Buddy request.");
-                        int maxLength = currentUser.getRequestList().size() - 1;
-                        System.out.println(
-                                "Select a user in your request list by choosing a number bewteen 0 and " + maxLength);
-                        int select = scanner.nextInt();
-                        StuddyBuddiesController.answerStuddyBuddyRequest(currentUser,
-                                currentUser.getRequestList().get(select));
+                        System.out.println("You chose to answer a Studdy Buddy request.");
+                        System.out.println("Enter the username of the user you want to answer the request of :");
+                        username = scanner.nextLine();
+                        searchedUser = FindUser.getUserByUsername(username);
+                        if (searchedUser == null) {
+                            throw new NoSuchElementException("The user doesn't exist.");
+                        }
+                        FriendRequestDatabase.findRequest(currentUser, searchedUser);
                         break;
                     case 3:
                         System.out.println("You chose to get rid of a Studdy Buddy.");
