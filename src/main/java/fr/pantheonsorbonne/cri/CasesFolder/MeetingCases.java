@@ -18,8 +18,8 @@ public class MeetingCases {
     public static void viewMeetings(Group currentGroup, User currentUser) {
         boolean meetingRunning = true;
         while (meetingRunning) {
-            int meetingId = scanner.nextInt();
-            Meeting currentMeeting = MeetingController.getCreatedMeetingById(meetingId);
+            String meetingName = scanner.nextLine();
+            Meeting currentMeeting = MeetingDatabase.getMeetingByName(meetingName);
             if (currentMeeting == null) {
                 throw new NoSuchElementException("The meeting doesn't exist");
             } else if (currentUser != currentMeeting.getMeetingAdmin()) {

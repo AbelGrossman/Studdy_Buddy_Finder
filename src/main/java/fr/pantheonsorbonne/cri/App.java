@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.cri;
 
-import fr.pantheonsorbonne.cri.ModelFolder.DataBaseConnection;
+import fr.pantheonsorbonne.cri.ModelFolder.DatabaseConnection;
 import fr.pantheonsorbonne.cri.UserFolder.*;
 import fr.pantheonsorbonne.cri.CasesFolder.*;
 
@@ -12,7 +12,7 @@ public class App {
     private static User currentUser = null;
 
     public static void main(String[] args) {
-        DataBaseConnection.dataBaseConnect();
+        DatabaseConnection.dataBaseConnect();
 
         System.out.println("Welcome to Studdy Buddy Finder !");
         System.out.println("--------------------------------");

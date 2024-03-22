@@ -1,12 +1,11 @@
 package fr.pantheonsorbonne.cri.ControllerFolder;
 
 import fr.pantheonsorbonne.cri.MeetingFolder.Meeting;
+import fr.pantheonsorbonne.cri.MeetingFolder.MeetingDatabase;
 import fr.pantheonsorbonne.cri.UserFolder.User;
 import fr.pantheonsorbonne.cri.GroupFolder.Group;
 import fr.pantheonsorbonne.cri.MeetingFolder.MeetingMembersDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,14 +13,15 @@ import java.time.LocalTime;
 public class MeetingController {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static List<Meeting> createdMeetings = new ArrayList<>();
-
     private MeetingController() {
         throw new IllegalStateException("Utility class");
     }
 
     public static void createMeeting(User admin, Group group) {
         // Demander à l'utilisateur de saisir la date de la réunion
+        System.out.println("Nome de la réunion : ");
+        String meetingName = scanner.nextLine();
+
         System.out.print("Date de la réunion (aaaa-mm-jj) : ");
         String meetingDate = scanner.nextLine();
         LocalDate date = LocalDate.parse(meetingDate);
@@ -49,18 +49,14 @@ public class MeetingController {
         boolean reservationRequired = scanner.nextBoolean();
 
         // Créer une réunion
-        Meeting meeting = new Meeting(group, date, startTime, endTime, meetingLocation, amountOfParticipants,
+        MeetingDatabase.insertMeetingIntoDatabase(meetingName, group, date, startTime, endTime, meetingLocation,
+                amountOfParticipants,
                 reservationRequired, admin);
-        admin.addEventToCalendar(meeting);
-        addCreatedMeeting(meeting);
-    }
-
-    private static void addCreatedMeeting(Meeting meeting) {
-        createdMeetings.add(meeting);
+        MeetingMembersDatabase.insertMeetingParticipantIntoDatabase(MeetingDatabase.getMeetingByName(meetingName),
+                admin);
     }
 
     public static void joinMeeting(User user, Meeting meeting) {
-        meeting.getParticipants().add(user);
         user.addEventToCalendar(meeting);
         MeetingMembersDatabase.insertMeetingParticipantIntoDatabase(meeting, user);
 
@@ -68,27 +64,12 @@ public class MeetingController {
     }
 
     public static void leaveMeeting(User user, Meeting meeting) {
-        meeting.getParticipants().remove(user);
         user.removeEventFromCalendar(meeting);
         MeetingMembersDatabase.removeMeetingParticipantFromDatabase(meeting, user);
     }
 
     public static void removeMeeting(Meeting meeting) {
         MeetingMembersDatabase.removeMeetingParticipants(meeting);
-        createdMeetings.remove(meeting);
-        meeting.removeMeetingFromDatabase();
-    }
-
-    public static Meeting getCreatedMeetingById(int meetingId) {
-        for (Meeting meeting : createdMeetings) {
-            if (meeting.getMeetingId() == meetingId) {
-                return meeting;
-            }
-        }
-        return null;
-    }
-
-    public static List<Meeting> getCreatedMeetings() {
-        return createdMeetings;
+        MeetingDatabase.removeMeetingFromDatabase(meeting);
     }
 }

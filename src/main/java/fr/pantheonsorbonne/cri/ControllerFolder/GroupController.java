@@ -28,35 +28,41 @@ public class GroupController {
         String studyLevel = scanner.nextLine();
 
         // Créer un groupe
-        GroupDataBase.insertGroupIntoDatabase(groupName, studyDomain, studyLevel, admin);
-        FindGroup.getGroupByGroupname(groupName);
+        GroupDatabase.insertGroupIntoDatabase(groupName, studyDomain, studyLevel, admin);
+        GroupDatabase.findGroupByGroupname(groupName);
     }
 
     public static void sendGroupRequest(Group group, User user) {
-        group.getGroupAdmin().getAdminRequests().get(group).add(user);
+        AdminRequestDatabase.insertAdminRequestIntoDatabase(group.getGroupAdmin(), user, group);
     }
 
     public static void answerGroupRequest(Group group, User user) {
         boolean choice = scanner.nextBoolean();
         if (choice) {
-            System.out.println("You joined " + group.getGroupName());
+            System.out.println(
+                    "You accepted " + user.getFirstName() + " " + user.getLastName() + " into " + group.getGroupName()
+                            + "!");
             addMember(user, group);
         } else {
-            System.out.println("You refused to join " + group.getGroupName());
+            System.out.println("You refused " + user.getFirstName() + " " + user.getLastName() + "'s request to join "
+                    + group.getGroupName() + ".");
         }
-        group.getGroupAdmin().getAdminRequests().get(group).remove(user);
+        AdminRequestDatabase.removeAdminRequestFromDatabase(group.getGroupAdmin(), user, group);
     }
 
     public static void sendGroupInvitation(User user, Group group) {
-        user.getGroupRequestList().add(group);
+        InvitationRequestDatabase.insertGroupInvitationIntoDatabase(group, user);
     }
 
     public static void answerGroupInvitation(Group group, User user) {
         boolean choice = scanner.nextBoolean();
         if (choice) {
+            System.out.println("You joined " + group.getGroupName() + "!");
             addMember(user, group);
+        } else {
+            System.out.println("You refused the invitation to join " + group.getGroupName() + ".");
         }
-        user.getGroupRequestList().remove(group);
+        InvitationRequestDatabase.removeGroupInvitationFromDatabase(group, user);
     }
 
     private static void addMember(User member, Group group) {
@@ -73,6 +79,6 @@ public class GroupController {
 
     public static void deleteGroup(Group group) {
         GroupMembersDatabase.removeGroupMembers(group);
-        GroupDataBase.removeGroupFromDatabase(group);
+        GroupDatabase.removeGroupFromDatabase(group);
     }
 }

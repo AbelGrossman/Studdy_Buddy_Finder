@@ -7,22 +7,13 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Meeting {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/study_buddy_finder";
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "root";
 
-    private static int currentId = 0;
     private int meetingId;
+    private String meetingName;
     private Group meetingGroup;
     private LocalDate meetingDate;
     private LocalTime meetingStartTime;
@@ -31,14 +22,17 @@ public class Meeting {
     private double latitude;
     private double longitude;
     private String googleMapsLink;
-    private List<User> participants = new ArrayList<>();
     private int amountOfParticipants;
     private boolean reservationRequired;
     private User meetingAdmin;
 
-    public Meeting(Group meetingGroup, LocalDate meetingDate, LocalTime meetingStartTime, LocalTime meetingEndTime,
+    public Meeting(int meetingId, String meetingName, Group meetingGroup, LocalDate meetingDate,
+            LocalTime meetingStartTime,
+            LocalTime meetingEndTime,
             String meetingLocation,
             int amountOfParticipants, boolean reservationRequired, User meetingAdmin) {
+        this.meetingId = meetingId;
+        this.meetingName = meetingName;
         this.meetingGroup = meetingGroup;
         this.meetingDate = meetingDate;
         this.meetingStartTime = meetingStartTime;
@@ -47,11 +41,9 @@ public class Meeting {
         this.latitude = 0;
         this.longitude = 0;
         this.googleMapsLink = generateGoogleMapsLink(meetingLocation);
-        this.participants.add(meetingAdmin);
         this.amountOfParticipants = amountOfParticipants;
         this.reservationRequired = reservationRequired;
         this.meetingAdmin = meetingAdmin;
-        insertMeetingIntoDatabase();
     }
 
     private String generateGoogleMapsLink(String meetingLocation) {
@@ -67,39 +59,6 @@ public class Meeting {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private void insertMeetingIntoDatabase() {
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String insertQuery = "INSERT INTO Meeting (meeting_group, meeting_date, meeting_start_time, meeting_end_time, meeting_location, amount_of_participants, reservation_required, meeting_admin) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setInt(1, this.meetingGroup.getGroupId());
-                preparedStatement.setDate(2, java.sql.Date.valueOf(this.meetingDate));
-                preparedStatement.setTime(3, java.sql.Time.valueOf(this.meetingStartTime));
-                preparedStatement.setTime(4, java.sql.Time.valueOf(this.meetingEndTime));
-                preparedStatement.setString(5, this.meetingLocation);
-                preparedStatement.setInt(6, this.amountOfParticipants);
-                preparedStatement.setBoolean(7, this.reservationRequired);
-                preparedStatement.setInt(8, this.meetingAdmin.getUserId());
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error inserting meeting into the database" + e.getMessage());
-        }
-    }
-
-    public void removeMeetingFromDatabase() {
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String deleteQuery = "DELETE FROM Meeting WHERE meeting_id = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
-                preparedStatement.setInt(1, this.meetingId);
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error deleting meeting from the database" + e.getMessage());
-        }
     }
 
     public int getMeetingId() {
@@ -134,15 +93,15 @@ public class Meeting {
         return meetingAdmin;
     }
 
-    public List<User> getParticipants() {
-        return participants;
-    }
-
     public Group getMeetingGroup() {
         return meetingGroup;
     }
 
     public String getGoogleMapsLink() {
         return googleMapsLink;
+    }
+
+    public String getMeetingName() {
+        return meetingName;
     }
 }

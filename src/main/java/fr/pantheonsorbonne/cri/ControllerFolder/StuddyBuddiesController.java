@@ -18,8 +18,7 @@ public class StuddyBuddiesController {
     }
 
     public static void sendStuddyBuddyRequest(User user, User studdyBuddy) {
-        
-        studdyBuddy.getRequestList().add(user);
+        FriendRequestDatabase.insertFriendRequestIntoDatabase(user, studdyBuddy);
     }
 
     public static void answerStuddyBuddyRequest(User user, User askingUser) {

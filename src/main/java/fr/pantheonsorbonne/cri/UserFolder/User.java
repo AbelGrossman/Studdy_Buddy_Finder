@@ -1,13 +1,9 @@
 package fr.pantheonsorbonne.cri.UserFolder;
 
-import fr.pantheonsorbonne.cri.GroupFolder.*;
 import fr.pantheonsorbonne.cri.MeetingFolder.Meeting;
 import fr.pantheonsorbonne.cri.StuddyBuddyFolder.FindUser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
@@ -192,7 +188,7 @@ public class User {
         this.interest2 = interest2;
     }
 
-    public void setUserId(){
+    public void setUserId() {
         this.userId = fetchUserId();
     }
 
