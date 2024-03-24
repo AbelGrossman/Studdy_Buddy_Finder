@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Meeting {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/study_buddy_finder";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "";
+    private static final String DB_PASSWORD = "root";
 
     private static int currentId = 0;
     private int meetingId;

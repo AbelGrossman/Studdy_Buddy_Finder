@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.UserFolderTest;
 import fr.pantheonsorbonne.cri.UserFolder.UserLogin;
 
 import org.junit.jupiter.api.Test;
@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
+//Working 24/03/2024
 public class UserLoginTest {
 
     @Test

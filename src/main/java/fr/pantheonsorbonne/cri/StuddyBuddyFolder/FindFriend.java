@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public abstract class FindFriend {
-    private static final String DB_URL = "jdbc:mysql://localhost:8887/study_buddy_finder";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/study_buddy_finder";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
 

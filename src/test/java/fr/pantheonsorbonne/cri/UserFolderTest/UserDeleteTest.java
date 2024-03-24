@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.UserFolderTest;
 
 import fr.pantheonsorbonne.cri.UserFolder.User;
 import fr.pantheonsorbonne.cri.UserFolder.UserDelete;
@@ -10,6 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+//Working 24/03/2024
 public class UserDeleteTest {
 
     @Test

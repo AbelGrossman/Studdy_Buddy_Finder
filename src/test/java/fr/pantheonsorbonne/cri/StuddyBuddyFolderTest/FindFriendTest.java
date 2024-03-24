@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.StuddyBuddyFolderTest;
 import fr.pantheonsorbonne.cri.StuddyBuddyFolder.FindFriend;
 
 import org.junit.jupiter.api.Test;

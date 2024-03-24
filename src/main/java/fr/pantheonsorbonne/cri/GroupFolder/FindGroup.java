@@ -14,9 +14,9 @@ public class FindGroup {
         throw new IllegalStateException("Utility class");
     }
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/study_buddy_finder";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "";
+    private static final String DB_PASSWORD = "root";
 
     public static Group getGroupByGroupname(String groupname) {
         Group group = null;

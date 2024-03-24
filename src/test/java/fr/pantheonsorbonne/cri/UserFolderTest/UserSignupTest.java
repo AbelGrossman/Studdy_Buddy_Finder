@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.cri;
+package fr.pantheonsorbonne.cri.UserFolderTest;
 import fr.pantheonsorbonne.cri.UserFolder.UserSignup;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,12 +14,14 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 //Pour mettre les tests dans l'ordre snn il ne marche pas
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
+//Not Working 24/03/2024
 public class UserSignupTest {
     
     @Test
     @Order(1)
     public void testMain(){
-        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayal@gmail.com\nmashalah\nParis\n\nInformatique\nEconomie\nMIAGE\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlala\nlayal@gmail.com\nmashalah\nParis\nLe Caire\nInformatique\nEconomie\nMIAGE\n".getBytes()));
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
@@ -30,7 +32,7 @@ public class UserSignupTest {
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
                                  "----------------------------------------------\n" +
-                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à deux lieux de résidence : \nVeuillez saisir jusqu'à deux centres d'intérêt : \nVeuillez saisir votre filière d'études : Inscription réussie !\n";
+                                 "Prénom : Nom : Nom d'utilisateur : Adresse e-mail : Mot de passe : Veuillez saisir jusqu'à deux lieux de résidence : \nVeuillez saisir jusqu'à deux centres d'intérêt : \nVeuillez saisir votre filière d'études (ex: L3 MIAGE) : Inscription réussie !\n";
         assertEquals(expectedOutput, outputStream.toString());
 
     }
@@ -40,7 +42,7 @@ public class UserSignupTest {
     @Order(2)
     public void testMainDuplicateEmail() {
         // Simuler les saisies utilisateur avec une adresse e-mail déjà utilisée
-        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlalatest\nlayal@gmail.com\nmashalah\nParis\n\nInformatique\nEconomie\nMathématiques\nMIAGE\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("Layal\nElzein\nlalatest\nlayal@gmail.com\nmashalah\nParis\nLe Caire\nInformatique\nEconomie\nMathématiques\nMIAGE\n".getBytes()));
 
         // Capturer la sortie standard
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
