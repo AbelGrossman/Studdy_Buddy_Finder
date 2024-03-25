@@ -22,7 +22,6 @@ public class Meeting {
     private double latitude;
     private double longitude;
     private String googleMapsLink;
-    private int amountOfParticipants;
     private boolean reservationRequired;
     private User meetingAdmin;
 
@@ -30,7 +29,7 @@ public class Meeting {
             LocalTime meetingStartTime,
             LocalTime meetingEndTime,
             String meetingLocation,
-            int amountOfParticipants, boolean reservationRequired, User meetingAdmin) {
+            boolean reservationRequired, User meetingAdmin) {
         this.meetingId = meetingId;
         this.meetingName = meetingName;
         this.meetingGroup = meetingGroup;
@@ -41,7 +40,6 @@ public class Meeting {
         this.latitude = 0;
         this.longitude = 0;
         this.googleMapsLink = generateGoogleMapsLink(meetingLocation);
-        this.amountOfParticipants = amountOfParticipants;
         this.reservationRequired = reservationRequired;
         this.meetingAdmin = meetingAdmin;
     }
@@ -81,10 +79,6 @@ public class Meeting {
         return meetingLocation;
     }
 
-    public int getAmountOfParticipants() {
-        return amountOfParticipants;
-    }
-
     public boolean isReservationRequired() {
         return reservationRequired;
     }
@@ -104,4 +98,29 @@ public class Meeting {
     public String getMeetingName() {
         return meetingName;
     }
+
+    public void setMeetingName(String meetingName) {
+        this.meetingName = meetingName;
+    }
+
+    public void setMeetingDate(LocalDate meetingDate) {
+        this.meetingDate = meetingDate;
+    }
+
+    public void setMeetingStartTime(LocalTime meetingStartTime) {
+        this.meetingStartTime = meetingStartTime;
+    }
+
+    public void setMeetingEndTime(LocalTime meetingEndTime) {
+        this.meetingEndTime = meetingEndTime;
+    }
+
+    public void setMeetingLocation(String meetingLocation) {
+        this.meetingLocation = meetingLocation;
+    }
+
+    public void setReservationRequired(boolean reservationRequired) {
+        this.reservationRequired = reservationRequired;
+    }
+
 }

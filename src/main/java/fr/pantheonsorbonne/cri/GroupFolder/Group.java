@@ -36,4 +36,16 @@ public class Group {
     public String getStudyLevel() {
         return this.studyLevel;
     }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public void setStudyDomain(String studyDomain) {
+        this.studyDomain = studyDomain;
+    }
+
+    public void setStudyLevel(String studyLevel) {
+        this.studyLevel = studyLevel;
+    }
 }

@@ -3,15 +3,9 @@ package fr.pantheonsorbonne.cri.ControllerFolder;
 import fr.pantheonsorbonne.cri.StuddyBuddyFolder.*;
 import fr.pantheonsorbonne.cri.UserFolder.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class StuddyBuddiesController {
-
-    private static Scanner scanner = new Scanner(System.in);
 
     private StuddyBuddiesController() {
         throw new IllegalStateException("Utility class");
@@ -21,11 +15,13 @@ public class StuddyBuddiesController {
         FriendRequestDatabase.insertFriendRequestIntoDatabase(user, studdyBuddy);
     }
 
-    public static void answerStuddyBuddyRequest(User user, User askingUser) {
+    public static void answerStuddyBuddyRequest(User user, User askingUser, Scanner scanner) {
+        System.out.println(askingUser.getFirstName() + " " + askingUser.getLastName()
+                + " wants to be your Studdy Buddy. Do you accept ? (true/false)");
         boolean choice = scanner.nextBoolean();
         if (choice) {
             System.out.println(
-                    askingUser.getFirstName() + " " + askingUser.getLastName() + " is your new Studdy Buddy !");
+                    askingUser.getUserName() + " is your new Studdy Buddy !");
             addStuddyBuddy(user, askingUser);
             addStuddyBuddy(askingUser, user);
         } else {
@@ -39,7 +35,6 @@ public class StuddyBuddiesController {
     }
 
     public static void removeStuddyBuddy(User user, User studdyBuddy) {
-        StuddyBuddyDatabase.insertStuddyBuddyIntoDatabase(user, studdyBuddy);
         StuddyBuddyDatabase.removeStuddyBuddyFromDatabase(user, studdyBuddy);
     }
 }

@@ -22,7 +22,16 @@ public class GroupDatabase {
             User groupAdmin) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String insertQuery = "INSERT INTO `Group` (group_name, study_domain, study_level, admin_id) VALUES (?, ?, ?, ?)";
-
+            try (PreparedStatement nameCheck = connection
+                    .prepareStatement("SELECT COUNT(*) FROM `Group` WHERE group_name=?")) {
+                nameCheck.setString(1, groupName);
+                try (ResultSet resultSet = nameCheck.executeQuery()) {
+                    if (resultSet.next() && resultSet.getInt(1) > 0) {
+                        System.out.println("Group name already exists. Please choose another name.");
+                        return;
+                    }
+                }
+            }
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setString(1, groupName);
                 preparedStatement.setString(2, studyDomain);
@@ -38,14 +47,13 @@ public class GroupDatabase {
 
     public static void removeGroupFromDatabase(Group group) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String deleteQuery = "DELETE FROM Group WHERE group_id = ?";
-
+            String deleteQuery = "DELETE FROM `Group` WHERE group_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
                 preparedStatement.setInt(1, group.getGroupId());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
-            System.out.println("Error deleting group from the database" + e.getMessage());
+            System.out.println("Error deleting group from the database: " + e.getMessage());
         }
     }
 
@@ -93,7 +101,31 @@ public class GroupDatabase {
         } catch (SQLException e) {
             System.out.println("Error getting group by group id: " + e.getMessage());
         }
-
         return group;
+    }
+
+    public static void updateGroupInDatabase(Group group) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String updateQuery = "UPDATE `Group` SET group_name=?, study_domain=?, study_level=? WHERE group_id=?";
+            try (PreparedStatement nameCheck = connection
+                    .prepareStatement("SELECT COUNT(*) FROM `Group` WHERE group_name=?")) {
+                nameCheck.setString(1, group.getGroupName());
+                try (ResultSet resultSet = nameCheck.executeQuery()) {
+                    if (resultSet.next() && resultSet.getInt(1) > 0) {
+                        System.out.println("Group name already exists. Please choose another name.");
+                        return;
+                    }
+                }
+            }
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, group.getGroupName());
+                preparedStatement.setString(2, group.getStudyDomain());
+                preparedStatement.setString(3, group.getStudyLevel());
+                preparedStatement.setInt(4, group.getGroupId());
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating group: " + e.getMessage());
+        }
     }
 }

@@ -1,4 +1,5 @@
 package fr.pantheonsorbonne.cri;
+
 import fr.pantheonsorbonne.cri.UserFolder.UserLogin;
 
 import org.junit.jupiter.api.Test;
@@ -6,10 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public class UserLoginTest {
+    private static Scanner scanner = new Scanner(System.in);
 
     @Test
     public void testLogin() {
@@ -36,12 +38,12 @@ public class UserLoginTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserLogin
-        UserLogin.login();
+        UserLogin.login(scanner);
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application de connexion !\n" +
-                                 "----------------------------------------------\n" +
-                                 "Nom d'utilisateur : Mot de passe : Connexion réussie !\n";
+                "----------------------------------------------\n" +
+                "Nom d'utilisateur : Mot de passe : Connexion réussie !\n";
         assertEquals(expectedOutput, outputStream.toString());
     }
 
@@ -55,13 +57,12 @@ public class UserLoginTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserLogin
-        UserLogin.login();
+        UserLogin.login(scanner);
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application de connexion !\n" +
-                                 "----------------------------------------------\n" +
-                                 "Nom d'utilisateur : Mot de passe : Nom d'utilisateur ou mot de passe incorrect. Réessayez ou inscrivez-vous.\n";
+                "----------------------------------------------\n" +
+                "Nom d'utilisateur : Mot de passe : Nom d'utilisateur ou mot de passe incorrect. Réessayez ou inscrivez-vous.\n";
         assertEquals(expectedOutput, outputStream.toString());
     }
 }
-

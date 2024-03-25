@@ -19,7 +19,7 @@ public class StuddyBuddyDatabase {
 
     public static void insertStuddyBuddyIntoDatabase(User user, User studdyBuddy) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String insertQuery = "INSERT INTO StuddyBuddy (user_id, studdy_buddy_id) VALUES (?, ?)";
+            String insertQuery = "INSERT INTO StuddyBuddies (user_id, studdy_buddy_id) VALUES (?, ?)";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setInt(1, user.getUserId());
@@ -33,7 +33,7 @@ public class StuddyBuddyDatabase {
 
     public static void removeStuddyBuddyFromDatabase(User user, User studdyBuddy) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String deleteQuery = "DELETE FROM StuddyBuddy WHERE user_id = ? AND studdy_buddy_id = ?";
+            String deleteQuery = "DELETE FROM StuddyBuddies WHERE user_id = ? AND studdy_buddy_id = ?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
                 preparedStatement.setInt(1, user.getUserId());

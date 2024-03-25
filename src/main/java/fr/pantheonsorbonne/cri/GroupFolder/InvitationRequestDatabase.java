@@ -19,22 +19,21 @@ public class InvitationRequestDatabase {
 
     public static void insertGroupInvitationIntoDatabase(Group group, User receiver) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String insertQuery = "INSERT INTO InvitationRequestList (group_id, receiver_id) VALUES (?, ?)";
+            String insertQuery = "INSERT INTO GroupRequest (group_id, receiver_id) VALUES (?, ?)";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setInt(1, group.getGroupId());
                 preparedStatement.setInt(2, receiver.getUserId());
                 preparedStatement.executeUpdate();
             }
-        } catch (Exception e) {
-            System.out.println("Error inserting request into the database" + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error inserting request into the database: " + e.getMessage());
         }
     }
 
     public static void removeGroupInvitationFromDatabase(Group group, User receiver) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String deleteQuery = "DELETE FROM InvitationRequestList WHERE group_id = ? AND receiver_id = ?";
-
+            String deleteQuery = "DELETE FROM GroupRequest WHERE group_id = ? AND receiver_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
                 preparedStatement.setInt(1, group.getGroupId());
                 preparedStatement.setInt(2, receiver.getUserId());
@@ -43,5 +42,23 @@ public class InvitationRequestDatabase {
         } catch (SQLException e) {
             System.out.println("Error deleting request from the database" + e.getMessage());
         }
+    }
+
+    public static User findGroupInvitation(Group group, User receiver) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String selectQuery = "SELECT * FROM GroupRequest WHERE group_id = ? AND receiver_id = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setInt(1, group.getGroupId());
+                preparedStatement.setInt(2, receiver.getUserId());
+                ResultSet resultSet=preparedStatement.executeQuery();
+                if(resultSet.next()){
+                    return receiver;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error finding request in the database" + e.getMessage());
+        }
+        return null;
     }
 }

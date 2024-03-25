@@ -7,14 +7,13 @@ import fr.pantheonsorbonne.cri.ControllerFolder.UserController;
 import java.util.Scanner;
 
 public class LoggedInCases {
-    private static Scanner scanner = new Scanner(System.in);
     private static int returnValue = 0;
 
     private LoggedInCases() {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void loggedInCases(User currentUser, boolean running) {
+    public static void loggedInCases(User currentUser, boolean running, Scanner scanner) {
         boolean runningLogin = true;
         while (runningLogin) {
             System.out.println("Menu: ");
@@ -34,23 +33,23 @@ public class LoggedInCases {
                         // Code pour modifier le profil
                         System.out.println("You chose to modifiy your profile.");
                         // Appeler la méthode pour modifier le profil
-                        UserController.updateUserProfile(currentUser);
+                        UserController.updateUserProfile(currentUser, scanner);
                         break;
                     case 2:
                         // Code pour créer un groupe
                         System.out.println("You chose to create a group.");
                         // Appeler la méthode pour créer un groupe
-                        GroupController.createGroup(currentUser);
+                        GroupController.createGroup(currentUser, scanner);
                         break;
                     case 3:
                         // Code pour rechercher un utilisateur
                         System.out.println("You chose to search a user.");
-                        StuddyBuddyCases.userSearchCases(currentUser);
+                        StuddyBuddyCases.userSearchCases(currentUser, scanner);
                         break;
                     case 4:
                         // Code pour sélectionner un groupe
                         System.out.println("You chose to select a group.");
-                        GroupCases.groupSelectionCases(currentUser);
+                        GroupCases.groupSelectionCases(currentUser, scanner);
                         break;
                     case 5:
                         System.out.println("You chose to log out");

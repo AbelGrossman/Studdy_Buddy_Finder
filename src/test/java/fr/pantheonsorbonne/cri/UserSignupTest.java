@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 //Pour mettre les tests dans l'ordre snn il ne marche pas
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserSignupTest {
+        private static Scanner scanner = new Scanner(System.in);
     
     @Test
     @Order(1)
@@ -25,7 +27,7 @@ public class UserSignupTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserLogin
-        UserSignup.signup();
+        UserSignup.signup(scanner);
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
@@ -47,7 +49,7 @@ public class UserSignupTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserSignup
-        UserSignup.signup();
+        UserSignup.signup(scanner);
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +
@@ -68,7 +70,7 @@ public class UserSignupTest {
         System.setOut(new PrintStream(outputStream));
 
         // Exécuter le main de UserSignup
-        UserSignup.signup();
+        UserSignup.signup(scanner);
 
         // Vérifier la sortie
         String expectedOutput = "Bienvenue dans votre application d'inscription !\n" +

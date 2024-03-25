@@ -16,48 +16,62 @@ public class UserSignup {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void signup() {
-        Scanner scanner = new Scanner(System.in);
+    public static void signup(Scanner scanner) {
         System.out.println("Bienvenue dans votre application d'inscription !");
         System.out.println("----------------------------------------------");
 
-        // Demander à l'utilisateur de saisir ses informations
-        System.out.print("Prénom : ");
-        String firstName = scanner.nextLine();
+        scanner.nextLine();
+        if (scanner.hasNextLine()) {
+            // Demander à l'utilisateur de saisir ses informations
+            System.out.print("Prénom : ");
+            String firstName = scanner.nextLine();
 
-        System.out.print("Nom : ");
-        String lastName = scanner.nextLine();
+            System.out.print("Nom : ");
+            String lastName = scanner.nextLine();
 
-        System.out.print("Nom d'utilisateur : ");
-        String userName = scanner.nextLine();
+            System.out.print("Nom d'utilisateur : ");
+            String userName = scanner.nextLine();
 
-        System.out.print("Adresse e-mail : ");
-        String userEmail = scanner.nextLine();
+            System.out.print("Adresse e-mail : ");
+            String userEmail = scanner.nextLine();
 
-        System.out.print("Mot de passe : ");
-        String userPassword = scanner.nextLine();
+            System.out.print("Mot de passe : ");
+            String userPassword = scanner.nextLine();
 
-        System.out.println("Veuillez saisir jusqu'à deux lieux de résidence : ");
-        String location1 = scanner.nextLine();
-        String location2 = scanner.nextLine();
+            System.out.println("Veuillez saisir jusqu'à deux lieux de résidence : ");
+            String location1 = scanner.nextLine();
+            String location2 = scanner.nextLine();
 
-        System.out.println("Veuillez saisir jusqu'à deux centres d'intérêt : ");
-        String interest1 = scanner.nextLine();
-        String interest2 = scanner.nextLine();
+            System.out.println("Veuillez saisir jusqu'à deux centres d'intérêt : ");
+            String interest1 = scanner.nextLine();
+            String interest2 = scanner.nextLine();
 
-        System.out.print("Veuillez saisir votre filière d'études (ex: L3 MIAGE) : ");
-        String userStudies = scanner.nextLine();
+            System.out.print("Veuillez saisir votre filière d'études (ex: L3 MIAGE) : ");
+            String userStudies = scanner.nextLine();
 
-        // Enregistrer l'utilisateur dans la base de données
-        if (registerUser(firstName, lastName, userName, userEmail, userPassword, location1, location2,
-                interest1, interest2, userStudies)) {
-            System.out.println("Inscription réussie !");
+            System.out.println("Vous êtes sur le point de vous inscrire. Voulez-vous continuer? (true/false)");
+            try {
+                boolean confirmation = scanner.nextBoolean();
+                if (!confirmation) {
+                    System.out.println("Inscription annulée.");
+                    return;
+                }
+            } catch (Exception e) {
+                System.out.println("Erreur lors de la saisie. Veuillez réessayer.");
+                return;
+            }
+
+            // Enregistrer l'utilisateur dans la base de données
+            if (registerUser(firstName, lastName, userName, userEmail, userPassword, location1, location2,
+                    interest1, interest2, userStudies)) {
+                System.out.println("Inscription réussie !");
+            } else {
+                System.out.println("Erreur lors de l'inscription. Veuillez réessayer.");
+            }
         } else {
-            System.out.println("Erreur lors de l'inscription. Veuillez réessayer.");
+            System.out.println("Erreur lors de la saisie. Veuillez réessayer.");
+            return;
         }
-        // il ne faut pas close le scanner sinon ca provoque un bug dans le menu
-        // principal.
-        // scanner.close();
     }
 
     // Méthode pour enregistrer un nouvel utilisateur dans la base de données
@@ -77,7 +91,6 @@ public class UserSignup {
                     }
                 }
             }
-
             // Vérifier si le nom d'utilisateur est déjà pris
             try (PreparedStatement usernameCheck = connection
                     .prepareStatement("SELECT COUNT(*) FROM user WHERE user_name = ?")) {
@@ -89,7 +102,6 @@ public class UserSignup {
                     }
                 }
             }
-
             // Insérer l'utilisateur dans la base de données
             try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "INSERT INTO user (first_name, last_name, user_name, user_email, user_password, location_1, location_2, interest_1, interest_2,  user_studies) VALUES (?,?,?,?,?,?,?,?,?,?)")) {

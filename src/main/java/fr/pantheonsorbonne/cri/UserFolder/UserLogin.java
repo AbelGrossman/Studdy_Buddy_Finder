@@ -18,16 +18,17 @@ public class UserLogin {
         throw new IllegalStateException("Utility class");
     }
 
-    public static User login() {
-        Scanner scanner = new Scanner(System.in);
-
+    public static User login(Scanner scanner) {
         System.out.println("Bienvenue dans votre application de connexion !");
         System.out.println("----------------------------------------------");
 
         // Demander à l'utilisateur de saisir son nom d'utilisateur et son mot de passe
         // dans le terminal
+        scanner.nextLine();
         System.out.print("Nom d'utilisateur : ");
         String userName = scanner.nextLine();
+
+        // Pour consommer la nouvelle ligne restante après nextInt()
 
         System.out.print("Mot de passe : ");
         String userPassword = scanner.nextLine();
@@ -40,9 +41,6 @@ public class UserLogin {
             System.out.println("Nom d'utilisateur ou mot de passe incorrect. Réessayez ou inscrivez-vous.");
         }
         return null;
-        // il ne faut pas close le scanner sinon ca provoque un bug dans le menu
-        // principal.
-        // scanner.close();
     }
 
     // Méthode pour vérifier les informations d'identification de l'utilisateur dans

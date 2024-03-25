@@ -14,7 +14,6 @@ public class DatabaseConnection {
         }
 
         public static void dataBaseConnect() {
-
                 try {
                         Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
                         Statement statement = connection.createStatement();
@@ -69,9 +68,10 @@ public class DatabaseConnection {
                                 + "meeting_start_time TIME,"
                                 + "meeting_end_time TIME,"
                                 + "meeting_location VARCHAR(100),"
-                                + "amount_of_participants INT,"
-                                + "reservation_required BOOLEAN"
+                                + "reservation_required BOOLEAN,"
                                 + "meeting_admin INT,"
+                                + "FOREIGN KEY (group_id) REFERENCES `Group`(group_id),"
+                                + "FOREIGN KEY (meeting_admin) REFERENCES User(user_id)"
                                 + ")";
                 String createMeetingParticipantsTableQuery = "CREATE TABLE IF NOT EXISTS MeetingParticipants ("
                                 + "meeting_id INT,"
@@ -88,13 +88,11 @@ public class DatabaseConnection {
                                 + "PRIMARY KEY (sender_id, receiver_id)"
                                 + ")";
                 String createGroupRequestTableQuery = "CREATE TABLE IF NOT EXISTS GroupRequest ("
-                                + "sender_id INT,"
                                 + "receiver_id INT,"
                                 + "group_id INT,"
-                                + "FOREIGN KEY (sender_id) REFERENCES User(user_id),"
                                 + "FOREIGN KEY (receiver_id) REFERENCES User(user_id),"
                                 + "FOREIGN KEY (group_id) REFERENCES `Group`(group_id),"
-                                + "PRIMARY KEY (sender_id, receiver_id, group_id)"
+                                + "PRIMARY KEY (receiver_id, group_id)"
                                 + ")";
                 String createAdminRequestsTableQuery = "CREATE TABLE IF NOT EXISTS AdminRequests ("
                                 + "admin_id INT,"
@@ -105,14 +103,50 @@ public class DatabaseConnection {
                                 + "FOREIGN KEY (sender_id) REFERENCES User(user_id),"
                                 + "PRIMARY KEY (admin_id, sender_id, group_id)"
                                 + ")";
-                statement.executeUpdate(createUserTableQuery);
-                statement.executeUpdate(createGroupTableQuery);
-                statement.executeUpdate(createGroupMembersTableQuery);
-                statement.executeUpdate(createStuddyBuddiesTableQuery);
-                statement.executeUpdate(createMeetingTableQuery);
-                statement.executeUpdate(createMeetingParticipantsTableQuery);
-                statement.executeUpdate(createFriendRequestTableQuery);
-                statement.executeUpdate(createGroupRequestTableQuery);
-                statement.executeUpdate(createAdminRequestsTableQuery);
+                try {
+                        statement.executeUpdate(createUserTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating user table: " + e);
+                }
+                try {
+                        statement.executeUpdate(createGroupTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating group table: " + e);
+                }
+                try {
+                        statement.executeUpdate(createGroupMembersTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating group members table: " + e);
+                }
+                try {
+                        statement.executeUpdate(createStuddyBuddiesTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating studdy buddies table: " + e);
+                }
+                try {
+                        statement.executeUpdate(createMeetingTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating meeting table: " + e);
+                }
+                try {
+                        statement.executeUpdate(createMeetingParticipantsTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating meeting participants table: " + e);
+                }
+                try {
+                        statement.executeUpdate(createFriendRequestTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating friend request table: " + e);
+                }
+                try {
+                        statement.executeUpdate(createGroupRequestTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating group request table: " + e);
+                }
+                try {
+                        statement.executeUpdate(createAdminRequestsTableQuery);
+                } catch (Exception e) {
+                        System.out.println("Error creating admin requests table: " + e);
+                }
         }
 }

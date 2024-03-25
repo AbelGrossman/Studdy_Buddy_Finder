@@ -26,7 +26,6 @@ public class App {
 
             // Demander à l'utilisateur de choisir une option
             System.out.println("Please choose an option:");
-
             if (scanner.hasNextInt()) {
                 int choice = scanner.nextInt();
                 // Effectuer une action en fonction du choix de l'utilisateur
@@ -34,12 +33,12 @@ public class App {
                     case 1:
                         // Code pour l'inscription
                         System.out.println("You chose to Sign Up.");
-                        UserSignup.signup();
+                        UserSignup.signup(scanner);
                         break;
                     case 2:
                         // Appeler le main de UserLogin pour la connexion
                         System.out.println("You chose to Login.");
-                        currentUser = UserLogin.login();
+                        currentUser = UserLogin.login(scanner);
                         if (currentUser != null) {
                             System.out.println(currentUser.getUserName() + " is connected.");
                         }
@@ -53,7 +52,7 @@ public class App {
                         continue;
                 }
                 if (currentUser != null) {
-                    LoggedInCases.loggedInCases(currentUser, running);
+                    LoggedInCases.loggedInCases(currentUser, running, scanner);
                     if (LoggedInCases.getReturnValue() == 5) {
                         currentUser = null;
                     } else {
