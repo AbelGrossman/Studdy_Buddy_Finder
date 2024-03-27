@@ -14,9 +14,9 @@ import fr.pantheonsorbonne.cri.UserFolder.*;
 
 public class MeetingDatabase {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/studdy_buddy_finder";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/study_buddy_finder";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "";
+    private static final String DB_PASSWORD = "root";
 
     private MeetingDatabase() {
         throw new IllegalStateException("Utility class");

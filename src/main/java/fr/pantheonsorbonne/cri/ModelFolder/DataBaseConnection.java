@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class DataBaseConnection {
+public class DatabaseConnection {
         private static final String DB_URL = "jdbc:mysql://localhost:3306/study_buddy_finder";
         private static final String DB_USERNAME = "root";
         private static final String DB_PASSWORD = "root";

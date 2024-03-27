@@ -1,7 +1,7 @@
 package fr.pantheonsorbonne.cri.GroupFolderTest;
 
 import fr.pantheonsorbonne.cri.GroupFolder.Group;
-import fr.pantheonsorbonne.cri.GroupFolder.GroupDataBase;
+import fr.pantheonsorbonne.cri.GroupFolder.GroupDatabase;
 import fr.pantheonsorbonne.cri.UserFolder.User;
 import fr.pantheonsorbonne.cri.GroupFolder.FindGroup;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class GroupDataBaseTest {
         User admin = new User(1000, "John", "Doe", "johndoe", "johndoe@example.com", "password", "Paris", "France", "Art", "Music", "University");
 
         // Insérer un groupe dans la base de données
-        GroupDataBase.insertGroupIntoDatabase("TestGroup", "Computer Science", "Bachelor", admin);
+        GroupDatabase.insertGroupIntoDatabase("TestGroup", "Computer Science", "Bachelor", admin);
 
         // Vérifier si le groupe a été inséré correctement en vérifiant s'il existe
         Group group = FindGroup.getGroupByGroupname("TestGroup");
@@ -41,7 +41,7 @@ public class GroupDataBaseTest {
         Group group = FindGroup.getGroupByGroupname("TestGroup");
 
         // Supprimer le groupe de la base de données
-        GroupDataBase.removeGroupFromDatabase(group);
+        GroupDatabase.removeGroupFromDatabase(group);
 
         // Vérifier si le groupe a été supprimé correctement en vérifiant s'il n'existe plus
         group = FindGroup.getGroupByGroupname("TestGroup");
